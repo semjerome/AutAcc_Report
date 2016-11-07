@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">AutAcc Report</string>
+    <string name="title_activity_report_list">ReportList</string>
 </resources>
