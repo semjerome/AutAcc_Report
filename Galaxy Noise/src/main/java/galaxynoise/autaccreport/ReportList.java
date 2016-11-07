@@ -1,5 +1,10 @@
 package galaxynoise.autaccreport;
 
+/**
+ * planning on making it sliding tabs
+ * With the incident list on first tab and then something lewse on secodn tab
+ */
+
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
