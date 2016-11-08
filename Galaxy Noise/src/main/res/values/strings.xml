@@ -5,4 +5,12 @@
 
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
+
+    <string name="e_videos">Event Videos</string>
+    <string name="vid1">Vid1</string>
+    <string name="vid2">Vid2</string>
+    <string name="vid3">Vid3</string>
+    <string name="gps_information">Event Location</string>
+    <string name="add_info">Additional Information</string>
+    <string name="hints_details">Driver\'s Information&#8230; \nInsurance Number&#8230;</string>
 </resources>
