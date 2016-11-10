@@ -10,17 +10,29 @@ public class Driver {
     String firstName;
     String lastName;
     String gender;
+    String insuranceNumber;
+
+
 
     public Driver()
     {
 
     }
-    public Driver(String driverLicense, String firstName, String lastName, String gender)
+    public Driver(String driverLicense, String firstName, String lastName, String gender, String insuranceNumber)
     {
+        insuranceNumber=insuranceNumber;
         driverLicense=driverLicense;
         firstName=firstName;
         lastName=lastName;
         gender=gender;
+    }
+
+    public String getInsuranceNumber() {
+        return insuranceNumber;
+    }
+
+    public void setInsuranceNumber(String insuranceNumber) {
+        this.insuranceNumber = insuranceNumber;
     }
 
     public String getDriverLicense() {
