@@ -14,6 +14,9 @@ public class Incident {
     int longli;
     int lati;
     int reportId;
+    /*
+
+     */
 
 
     public Incident()
