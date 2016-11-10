@@ -9,7 +9,7 @@ import java.util.Date;
 
 public class Incident {
 
-    String insuranceNumber;
+
     Date incidentDate;
     int longli;
     int lati;
@@ -17,10 +17,48 @@ public class Incident {
     /*
 
      */
-
-
     public Incident()
     {
 
+    }
+
+    public Date getIncidentDate() {
+        return incidentDate;
+    }
+
+    public void setIncidentDate(Date incidentDate) {
+        this.incidentDate = incidentDate;
+    }
+
+    public int getLongli() {
+        return longli;
+    }
+
+    public void setLongli(int longli) {
+        this.longli = longli;
+    }
+
+    public int getLati() {
+        return lati;
+    }
+
+    public void setLati(int lati) {
+        this.lati = lati;
+    }
+
+    public int getReportId() {
+        return reportId;
+    }
+
+    public void setReportId(int reportId) {
+        this.reportId = reportId;
+    }
+
+    @Override
+    public String toString() {
+        return "Incident{" +
+                "reportId=" + reportId +
+                ", incidentDate=" + incidentDate +
+                '}';
     }
 }
