@@ -20,10 +20,8 @@ public class VidActivity extends AppCompatActivity implements View.OnClickListen
 
         Button btnv1 = (Button) findViewById(R.id.btnv1);
         btnv1.setOnClickListener(this); // calling onClick() method
-
         Button btnv2 = (Button) findViewById(R.id.btnv2);
         btnv2.setOnClickListener(this);
-
         Button btnv3 = (Button) findViewById(R.id.btnv3);
         btnv3.setOnClickListener(this);
     }

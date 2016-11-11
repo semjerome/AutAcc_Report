@@ -33,7 +33,6 @@ public class lists extends AppCompatActivity {
         setContentView(R.layout.activity_lists);
 
         String[] results  = {"", "", "2. 26. 2016 10:41"};
-
         /*
         * I'm still trying to get data from the parent's app
         * Onclick of button2, send data location(URL) in sever

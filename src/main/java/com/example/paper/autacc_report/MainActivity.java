@@ -23,6 +23,7 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         Button b1 = (Button) findViewById(R.id.button);
+
         /*
         * In this part, we will add the function which can login sql and
         * check if it is available to connect to sql
