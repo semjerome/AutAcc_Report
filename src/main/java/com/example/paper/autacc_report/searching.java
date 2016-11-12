@@ -26,7 +26,6 @@ import android.widget.DatePicker;
 class DBHelper extends SQLiteOpenHelper
 {
     private static final String DATABASE_NAME = "mycontacts.db";
-
     private static final int DATABASE_VERSION = 2;
 
     public DBHelper(Context context)
@@ -57,6 +56,7 @@ public class searching extends AppCompatActivity
     protected void onCreate(Bundle savedInstanceState)
     {
         super.onCreate(savedInstanceState);
+
         setContentView(R.layout.activity_searching);
 
         helper = new DBHelper(this);

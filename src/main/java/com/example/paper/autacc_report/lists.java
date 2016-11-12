@@ -32,7 +32,6 @@ public class lists extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_lists);
 
-
         String[] results  = {"", "", "2. 26. 2016 10:41"};
 
         /*
