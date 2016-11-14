@@ -5,4 +5,9 @@ package galaxynoise.autaccreport;
  */
 
 public class DBHandler {
+
+    private static final int DATABASE_VERSIO = 1;
+
+    private static final String DATABASE_NAME = "Report_db";
+
 }
