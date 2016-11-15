@@ -13,4 +13,5 @@
     <string name="gps_information">Event Location</string>
     <string name="add_info">Additional Information</string>
     <string name="hints_details">Driver\'s Information&#8230; \nInsurance Number&#8230;</string>
+    <string name="title_activity_test">TestActivity</string>
 </resources>
