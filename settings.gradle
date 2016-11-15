@@ -1,1 +1,1 @@
-include ':app', ':Galaxy Noise'
+include ':app', ':Galaxy Noise', ':autoacc_reportfinal'
