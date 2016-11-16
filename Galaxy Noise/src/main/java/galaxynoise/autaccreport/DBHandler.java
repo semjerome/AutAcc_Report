@@ -19,7 +19,7 @@ public class DBHandler extends SQLiteOpenHelper {
 
     private static final int DATABASE_VERSION = 1;
 
-    private static final String DATABASE_NAME = "reportdb";
+    private static final String DATABASE_NAME = "incident_db";
 
     private static final String TABLE_NAME ="User";
     private static final String TABLE_NAME1 ="Incident";
