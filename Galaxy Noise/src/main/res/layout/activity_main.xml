@@ -6,12 +6,11 @@
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
-    tools:context="com.example.paper.autacc_report.MainActivity"
 
     android:background="@drawable/background">
 
     <Button
-        android:text="Log In"
+        android:text="@string/log_in"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@+id/editText2"
@@ -43,7 +42,7 @@
 
     <TextView
         android:text="@string/loginidBt"
-        android:textSize="18dp"
+        android:textSize="18sp"
         android:textStyle="bold"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -54,7 +53,7 @@
 
     <TextView
         android:text="@string/loginpwBt"
-        android:textSize="18dp"
+        android:textSize="18sp"
         android:textStyle="bold"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
