@@ -67,20 +67,25 @@ public class PageFragmentVid extends Fragment {
         else if (mPage == 3)
         { //video
             view = inflater.inflate(R.layout.fragment_eventvideos, container, false);
-            String videoUrl = "http://www.androidbegin.com/tutorial/AndroidCommercial.3gp";
-            Uri uri = Uri.parse(videoUrl);
+            //String videoUrl = "http://www.semjerome.com/Video_files/Family guy - archie take.3gp";
+            //Uri uri = Uri.parse(videoUrl);
+
             VideoView mVideoView  = (VideoView) view.findViewById(R.id.videoView);
             MediaController mediaController = new MediaController(getActivity());
             mediaController.setAnchorView(mVideoView);
             mVideoView.setMediaController(mediaController);
-
+            String myPackage= "galaxynoise.autaccreport";
+            Uri uri = Uri.parse("android.resource://" +myPackage+ "/" +R.raw.testvideo);
             try{
-                mVideoView.setVideoURI(uri);
+               mVideoView.setVideoURI(uri);
             }catch(Exception e){
                 Log.e("Error", e.getMessage());
                 e.printStackTrace();
             }
             mVideoView.start();
+            String filepath = "android.resource://"+ myPackage+ "R.raw.testvideo";
+            TextView tv= (TextView) view.findViewById(R.id.tvVideoPath);
+            tv.setText(filepath);
             //MediaController videoMediaController = new MediaController(this);
             //mVideoView.setVideoPath(mUrl);
             //videoMediaController.setMediaPlayer(mVideoView);
