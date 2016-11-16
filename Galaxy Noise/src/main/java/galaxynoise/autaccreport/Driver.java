@@ -12,8 +12,6 @@ public class Driver {
     String gender;
     String insuranceNumber;
 
-
-
     public Driver()
     {
 
