@@ -358,7 +358,18 @@ public class DBHandler extends SQLiteOpenHelper {
         return db.update(TABLE_NAME2, values, COLUMN_REPORTID + " = ?",
                 new String[] { String.valueOf(incident.getReportId()) });
     }
-
+    public int checkUser(User user)
+    {
+        int id=-1;
+        SQLiteDatabase db=this.getReadableDatabase();
+        Cursor cursor=db.rawQuery("SELECT "+ COLUMN_ID + "FROM "+ TABLE_NAME + "WHERE "+COLUMN_USER +" =? AND "+ COLUMN_PASSWORD + "=? ",new String[]{user.getUserName(),user.getPassword()});
+        if(cursor.getCount()>0) {
+            cursor.moveToFirst();
+            id=cursor.getInt(0);
+            cursor.close();
+        }
+        return id;
+    }
 
     /*
     public List<User> selectAll() {
@@ -412,7 +423,7 @@ public class DBHandler extends SQLiteOpenHelper {
         return contactList;
     }
 */
-
+/*
     public int getCount(User user) {
         String countQuery = "SELECT  * FROM " + TABLE_NAME1 + " Where " + COLUMN_ID+"= " +user.getUid();
         SQLiteDatabase db = this.getReadableDatabase();
@@ -420,5 +431,5 @@ public class DBHandler extends SQLiteOpenHelper {
         cursor.close();
 
         return cursor.getCount();
-    }
+    }*/
 }
