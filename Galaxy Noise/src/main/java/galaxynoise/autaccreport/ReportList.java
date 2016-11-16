@@ -5,14 +5,24 @@ package galaxynoise.autaccreport;
  * With the incident list on first tab and then something lewse on secodn tab
  */
 
+import android.content.Intent;
+import android.database.Cursor;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
+import android.widget.ListView;
+
+import java.util.ArrayList;
 
 public class ReportList extends AppCompatActivity {
+
+    private DBHandler dbhandler;
+    ListView listPat;
+    Intent currIntent;
+    //PatientAdapter patientAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -29,6 +39,44 @@ public class ReportList extends AppCompatActivity {
                         .setAction("Action", null).show();
             }
         });
+
+    }
+        private void showPatientList(User user) {
+            ArrayList<Incident> incidentList = new ArrayList<Incident>();
+            incidentList.clear();
+
+            String query = "SELECT * FROM Incident WHERE uid="+ user.getUid();
+            Cursor c1 = dbhandler.selectQuery(query);
+
+            if (c1 != null && c1.getCount() != 0) {
+                if (c1.moveToFirst()) {
+                    do {
+                        Incident incident=new Incident();
+                        int reportIndex = c1.getColumnIndex(dbhandler.COLUMN_REPORTID);
+                        int incidateIndex = c1.getColumnIndex(dbhandler.COLUMN_INCIDENT_DATE);
+                        int longiIndex = c1.getColumnIndex(dbhandler.COLUMN_LONGI);
+                        int latiIndex = c1.getColumnIndex(dbhandler.COLUMN_LATI);
+                        int videoIndex = c1.getColumnIndex(dbhandler.COLUMN_VIDEO_NAME);
+                        incident.setReportId(c1.getInt(reportIndex));
+                        incident.setIncidentDate(c1.getString(incidateIndex));
+                        incident.setLongli(c1.getDouble(longiIndex));
+                        incident.setLati(c1.getDouble(latiIndex));
+                        incident.setVideoName(c1.getString(videoIndex));
+
+                        incidentList.add(incident);
+
+                    } while (c1.moveToNext());
+                }
+            }
+            c1.close();
+/*
+            PatientAdapter patientAdapter=new PatientAdapter(getActivity(),patientList);
+            listPat.setAdapter(patientAdapter);
+
+*/
+
+        }
+
     }
 
-}
+
