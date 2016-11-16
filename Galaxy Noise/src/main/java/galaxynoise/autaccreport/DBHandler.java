@@ -296,6 +296,38 @@ public class DBHandler extends SQLiteOpenHelper {
         }
         return driver;
     }
+
+    void addCar(Car car, Incident incident) {
+        SQLiteDatabase db = this.getWritableDatabase();
+
+        ContentValues values = new ContentValues();
+        // values.put(COLUMN_ID, patient.getPatientId());
+        values.put(COLUMN_PLATENUMBER, car.getPlateNumber());
+        values.put(COLUMN_CAR_MAKE, car.getCarMake());
+        values.put(COLUMN_CAR_MODEL, car.getCarModel());
+        values.put(COLUMN_CAR_YEAR, car.getCarYEar());
+        values.put(COLUMN_REPORTID, incident.getReportId());
+        // Inserting Row
+        db.insert(TABLE_NAME2, null, values);
+        db.close(); // Closing database connection
+    }
+
+    void addDriver(Driver driver, Incident incident) {
+        SQLiteDatabase db = this.getWritableDatabase();
+
+        ContentValues values = new ContentValues();
+        // values.put(COLUMN_ID, patient.getPatientId());
+        values.put(COLUMN_DRIVER_LINCENSE, driver.getDriverLicense());
+        values.put(COLUMN_FNAME, driver.getFirstName());
+        values.put(COLUMN_LNAME, driver.getLastName());
+        values.put(COLUMN_GENDER, driver.getGender());
+        values.put(COLUMN_INSURANCE, driver.getInsuranceNumber());
+        values.put(COLUMN_REPORTID, incident.getReportId());
+        // Inserting Row
+        db.insert(TABLE_NAME3, null, values);
+        db.close(); // Closing database connection
+    }
+
   /*  public int updateUser(User user) {
         SQLiteDatabase db = this.getWritableDatabase();
 
