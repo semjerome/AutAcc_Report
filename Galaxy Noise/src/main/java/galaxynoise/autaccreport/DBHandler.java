@@ -8,6 +8,7 @@ import android.database.sqlite.SQLiteOpenHelper;
 import android.util.Log;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -21,10 +22,35 @@ public class DBHandler extends SQLiteOpenHelper {
     private static final String DATABASE_NAME = "Report_db";
 
     private static final String TABLE_NAME ="User";
+    private static final String TABLE_NAME1 ="Incident";
+    private static final String TABLE_NAME2 ="Car";
+    private static final String TABLE_NAME3 ="Driver";
 
+    //User
     public static final String COLUMN_ID ="uid";
     public static final String COLUMN_USER ="username";
     public static final String COLUMN_PASSWORD ="password";
+
+    //Incident
+    public static final String COLUMN_REPORTID ="reportid";
+    public static final String COLUMN_INCIDENT_DATE ="incidentdate";
+    public static final String COLUMN_LONGI ="longi";
+    public static final String COLUMN_LATI ="lati";
+
+    //Car
+    public static final String COLUMN_PLATENUMBER ="platenumber";
+    public static final String COLUMN_CAR_MAKE ="carmake";
+    public static final String COLUMN_CAR_MODEL ="carmodel";
+    public static final String COLUMN_CAR_YEAR ="caryear";
+
+    //Driver
+    public static final String COLUMN_DRIVER_LINCENSE ="driverlicense";
+    public static final String COLUMN_FNAME ="fname";
+    public static final String COLUMN_LNAME ="lname";
+    public static final String COLUMN_GENDER ="gender";
+    public static final String COLUMN_INSURANCE ="insurancenumber";
+
+
 
     public DBHandler(Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
@@ -34,10 +60,33 @@ public class DBHandler extends SQLiteOpenHelper {
     @Override
     public void onCreate(SQLiteDatabase db) {
         String CREATE_USERS_TABLE_QUERY = "CREATE TABLE " + TABLE_NAME + "("
-                + COLUMN_ID + " TEXT PRIMARY KEY,"
+                + COLUMN_ID + " INTEGER PRIMARY KEY,"
                 + COLUMN_USER + " TEXT,"
                 + COLUMN_PASSWORD +" TEXT," + ")";
         db.execSQL(CREATE_USERS_TABLE_QUERY);
+
+        String CREATE_INCIDENT_TABLE_QUERY = "CREATE TABLE " + TABLE_NAME1 + "("
+                + COLUMN_REPORTID + " INTEGER PRIMARY KEY,"
+                + COLUMN_INCIDENT_DATE + " DATE,"
+                + COLUMN_LONGI + " REAL,"
+                + COLUMN_LATI +" REAL," + ")";
+        db.execSQL(CREATE_INCIDENT_TABLE_QUERY);
+
+        String CREATE_CAR_TABLE_QUERY = "CREATE TABLE " + TABLE_NAME2 + "("
+                + COLUMN_PLATENUMBER + " TEXT PRIMARY KEY,"
+                + COLUMN_CAR_MAKE + " TEXT,"
+                + COLUMN_CAR_MODEL + " TEXT,"
+                + COLUMN_CAR_YEAR +" INTEGER," + ")";
+        db.execSQL(CREATE_CAR_TABLE_QUERY);
+
+        String CREATE_DRIVER_TABLE_QUERY = "CREATE TABLE " + TABLE_NAME3 + "("
+                + COLUMN_DRIVER_LINCENSE + " TEXT PRIMARY KEY,"
+                + COLUMN_FNAME+ " TEXT,"
+                + COLUMN_LNAME + " TEXT,"
+                + COLUMN_GENDER+" TEXT,"
+                + COLUMN_INSURANCE + " TEXT,"+ ")";
+        db.execSQL(CREATE_DRIVER_TABLE_QUERY);
+
         Log.d("Create","db has been created......");
 
     }
@@ -48,6 +97,8 @@ public class DBHandler extends SQLiteOpenHelper {
 
         onCreate(db);
     }
+
+    //GetUser
     User getUser(String id) {
         SQLiteDatabase db = this.getReadableDatabase();
 
@@ -67,6 +118,72 @@ public class DBHandler extends SQLiteOpenHelper {
 
         return user;
     }
+
+    //GetIncident
+    Incident getIncident(String id) {
+        SQLiteDatabase db = this.getReadableDatabase();
+
+
+        Cursor cursor = db.query(TABLE_NAME1, new String[] { COLUMN_REPORTID,
+                        COLUMN_INCIDENT_DATE, COLUMN_LONGI, COLUMN_LATI}, COLUMN_REPORTID + "=?",
+                new String[] { String.valueOf(id) }, null, null, null, null);
+        if (cursor != null)
+            cursor.moveToFirst();
+        int idIndex = cursor.getColumnIndex(DBHandler.COLUMN_REPORTID);
+        int incdateIndex = cursor.getColumnIndex(DBHandler.COLUMN_INCIDENT_DATE);
+        int longiIndex = cursor.getColumnIndex(DBHandler.COLUMN_LONGI);
+        int latiIndex = cursor.getColumnIndex(DBHandler.COLUMN_LATI);
+
+
+
+        Incident incident=new Incident(cursor.getInt(idIndex),cursor.getString(incdateIndex),cursor.getDouble(longiIndex),cursor.getDouble(latiIndex));
+
+        return incident;
+    }
+    //Get Car
+    Car getCar(String id) {
+        SQLiteDatabase db = this.getReadableDatabase();
+
+
+        Cursor cursor = db.query(TABLE_NAME2, new String[] { COLUMN_PLATENUMBER,
+                        COLUMN_CAR_MAKE, COLUMN_CAR_MODEL, COLUMN_CAR_YEAR}, COLUMN_PLATENUMBER + "=?",
+                new String[] { String.valueOf(id) }, null, null, null, null);
+        if (cursor != null)
+            cursor.moveToFirst();
+        int plateIndex = cursor.getColumnIndex(DBHandler.COLUMN_PLATENUMBER);
+        int makeIndex = cursor.getColumnIndex(DBHandler.COLUMN_CAR_MAKE);
+        int modelIndex = cursor.getColumnIndex(DBHandler.COLUMN_CAR_MODEL);
+        int yearIndex = cursor.getColumnIndex(DBHandler.COLUMN_CAR_YEAR);
+
+
+
+        Car car=new Car(cursor.getString(plateIndex),cursor.getString(makeIndex),cursor.getString(modelIndex),cursor.getInt(yearIndex));
+
+        return car;
+    }
+    //Get Driver
+    Driver getDriver(String id) {
+        SQLiteDatabase db = this.getReadableDatabase();
+
+
+        Cursor cursor = db.query(TABLE_NAME3, new String[] { COLUMN_DRIVER_LINCENSE,
+                        COLUMN_FNAME, COLUMN_LNAME, COLUMN_GENDER, COLUMN_INSURANCE}, COLUMN_DRIVER_LINCENSE + "=?",
+                new String[] { String.valueOf(id) }, null, null, null, null);
+        if (cursor != null)
+            cursor.moveToFirst();
+        int licIndex = cursor.getColumnIndex(DBHandler.COLUMN_DRIVER_LINCENSE);
+        int fnameIndex = cursor.getColumnIndex(DBHandler.COLUMN_FNAME);
+        int lnameIndex = cursor.getColumnIndex(DBHandler.COLUMN_LNAME);
+        int genderIndex = cursor.getColumnIndex(DBHandler.COLUMN_GENDER);
+        int insIndex = cursor.getColumnIndex(DBHandler.COLUMN_INSURANCE);
+
+
+
+        Driver driver=new Driver(cursor.getString(licIndex),cursor.getString(fnameIndex),cursor.getString(lnameIndex),cursor.getString(genderIndex),cursor.getString(insIndex));
+
+        return driver;
+    }
+
 
     public Cursor selectQuery(String query) {
         Cursor c1 = null;

@@ -10,32 +10,35 @@ import java.util.Date;
 public class Incident {
 
 
-    Date incidentDate;
-    double longli;
+    String incidentDate;
+    double longi;
     double lati;
     int reportId;
     /*
 
      */
-    public Incident()
+    public Incident(int reportId, String incidentDate, double longi, double lati)
     {
-
+        this.reportId = reportId;
+        this.incidentDate=incidentDate;
+        this.longi=longi;
+        this.lati = lati;
     }
 
-    public Date getIncidentDate() {
+    public String getIncidentDate() {
         return incidentDate;
     }
 
-    public void setIncidentDate(Date incidentDate) {
+    public void setIncidentDate(String incidentDate) {
         this.incidentDate = incidentDate;
     }
 
-    public double getLongli() {
-        return longli;
+    public double getLongi() {
+        return longi;
     }
 
-    public void setLongli(int longli) {
-        this.longli = longli;
+    public void setLongli(int longi) {
+        this.longi = longi;
     }
 
     public double getLati() {
