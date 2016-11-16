@@ -19,7 +19,7 @@ public class DBHandler extends SQLiteOpenHelper {
 
     private static final int DATABASE_VERSION = 1;
 
-    private static final String DATABASE_NAME = "Report_db";
+    private static final String DATABASE_NAME = "reportdb";
 
     private static final String TABLE_NAME ="User";
     private static final String TABLE_NAME1 ="Incident";
@@ -36,6 +36,8 @@ public class DBHandler extends SQLiteOpenHelper {
     public static final String COLUMN_INCIDENT_DATE ="incidentdate";
     public static final String COLUMN_LONGI ="longi";
     public static final String COLUMN_LATI ="lati";
+    public static final String COLUMN_VIDEO_NAME ="videoname";
+
 
     //Car
     public static final String COLUMN_PLATENUMBER ="platenumber";
@@ -50,7 +52,7 @@ public class DBHandler extends SQLiteOpenHelper {
     public static final String COLUMN_GENDER ="gender";
     public static final String COLUMN_INSURANCE ="insurancenumber";
 
-
+//comment
 
     public DBHandler(Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
@@ -69,7 +71,8 @@ public class DBHandler extends SQLiteOpenHelper {
                 + COLUMN_REPORTID + " INTEGER PRIMARY KEY,"
                 + COLUMN_INCIDENT_DATE + " DATE,"
                 + COLUMN_LONGI + " REAL,"
-                + COLUMN_LATI +" REAL," + ")";
+                + COLUMN_LATI +" REAL,"
+                + COLUMN_VIDEO_NAME + " TEXT,"+ ")";
         db.execSQL(CREATE_INCIDENT_TABLE_QUERY);
 
         String CREATE_CAR_TABLE_QUERY = "CREATE TABLE " + TABLE_NAME2 + "("
@@ -133,10 +136,11 @@ public class DBHandler extends SQLiteOpenHelper {
         int incdateIndex = cursor.getColumnIndex(DBHandler.COLUMN_INCIDENT_DATE);
         int longiIndex = cursor.getColumnIndex(DBHandler.COLUMN_LONGI);
         int latiIndex = cursor.getColumnIndex(DBHandler.COLUMN_LATI);
+        int videNameIndex = cursor.getColumnIndex(DBHandler.COLUMN_VIDEO_NAME);
 
 
 
-        Incident incident=new Incident(cursor.getInt(idIndex),cursor.getString(incdateIndex),cursor.getDouble(longiIndex),cursor.getDouble(latiIndex));
+        Incident incident=new Incident(cursor.getInt(idIndex),cursor.getString(incdateIndex),cursor.getDouble(longiIndex),cursor.getDouble(latiIndex),cursor.getString(videNameIndex));
 
         return incident;
     }
