@@ -62,24 +62,29 @@ public class DBHandler extends SQLiteOpenHelper {
     @Override
     public void onCreate(SQLiteDatabase db) {
         String CREATE_USERS_TABLE_QUERY = "CREATE TABLE " + TABLE_NAME + "("
-                + COLUMN_ID + " INTEGER PRIMARY KEY,"
+                + COLUMN_ID + " INTEGER PRIMARY KEY AUTOINCREMENT,"
                 + COLUMN_USER + " TEXT,"
                 + COLUMN_PASSWORD +" TEXT," + ")";
         db.execSQL(CREATE_USERS_TABLE_QUERY);
 
         String CREATE_INCIDENT_TABLE_QUERY = "CREATE TABLE " + TABLE_NAME1 + "("
-                + COLUMN_REPORTID + " INTEGER PRIMARY KEY,"
+                + COLUMN_REPORTID + " INTEGER PRIMARY KEY AUTOINCREMENT,"
                 + COLUMN_INCIDENT_DATE + " DATE,"
                 + COLUMN_LONGI + " REAL,"
                 + COLUMN_LATI +" REAL,"
-                + COLUMN_VIDEO_NAME + " TEXT,"+ ")";
+                + COLUMN_VIDEO_NAME + " TEXT,"
+                + COLUMN_ID +"INTEGER "
+                + " FOREIGN KEY ("+COLUMN_ID+") REFERENCES "+TABLE_NAME+"("+COLUMN_ID+"))";
         db.execSQL(CREATE_INCIDENT_TABLE_QUERY);
+
 
         String CREATE_CAR_TABLE_QUERY = "CREATE TABLE " + TABLE_NAME2 + "("
                 + COLUMN_PLATENUMBER + " TEXT PRIMARY KEY,"
                 + COLUMN_CAR_MAKE + " TEXT,"
                 + COLUMN_CAR_MODEL + " TEXT,"
-                + COLUMN_CAR_YEAR +" INTEGER," + ")";
+                + COLUMN_CAR_YEAR +" INTEGER,"
+                + COLUMN_REPORTID +"INTEGER "
+                + " FOREIGN KEY ("+COLUMN_REPORTID+") REFERENCES "+TABLE_NAME1+"("+COLUMN_REPORTID+"))";
         db.execSQL(CREATE_CAR_TABLE_QUERY);
 
         String CREATE_DRIVER_TABLE_QUERY = "CREATE TABLE " + TABLE_NAME3 + "("
@@ -87,7 +92,9 @@ public class DBHandler extends SQLiteOpenHelper {
                 + COLUMN_FNAME+ " TEXT,"
                 + COLUMN_LNAME + " TEXT,"
                 + COLUMN_GENDER+" TEXT,"
-                + COLUMN_INSURANCE + " TEXT,"+ ")";
+                + COLUMN_INSURANCE + " TEXT,"
+                + COLUMN_REPORTID +"INTEGER "
+                + " FOREIGN KEY ("+COLUMN_REPORTID+") REFERENCES "+TABLE_NAME1+"("+COLUMN_REPORTID+"))";
         db.execSQL(CREATE_DRIVER_TABLE_QUERY);
 
         Log.d("Create","db has been created......");
@@ -200,15 +207,36 @@ public class DBHandler extends SQLiteOpenHelper {
     }
 
 
-/*
-    public void delectUser(User user) {
+
+    public void deleteUser(User user) {
         SQLiteDatabase db = this.getWritableDatabase();
         db.delete(TABLE_NAME, COLUMN_ID + " = ?",
-                new String[]{String.valueOf(user.getUser_id())});
+                new String[]{String.valueOf(user.getUid())});
         db.close();
 
     }
-    public int updateUser(User user) {
+    public void deleteIncident(Incident incident) {
+        SQLiteDatabase db = this.getWritableDatabase();
+        db.delete(TABLE_NAME1, COLUMN_REPORTID + " = ?",
+                new String[]{String.valueOf(incident.getReportId())});
+        db.close();
+
+    }
+    public void deleteCard(Car car) {
+        SQLiteDatabase db = this.getWritableDatabase();
+        db.delete(TABLE_NAME2, COLUMN_PLATENUMBER + " = ?",
+                new String[]{String.valueOf(car.getPlateNumber())});
+        db.close();
+
+    }
+    public void deleteDriver(Driver driver) {
+        SQLiteDatabase db = this.getWritableDatabase();
+        db.delete(TABLE_NAME2, COLUMN_DRIVER_LINCENSE + " = ?",
+                new String[]{String.valueOf(driver.getDriverLicense())});
+        db.close();
+
+    }
+  /*  public int updateUser(User user) {
         SQLiteDatabase db = this.getWritableDatabase();
 
         ContentValues values = new ContentValues();
