@@ -5,4 +5,31 @@
 
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
+
+    <string name="title_activity_searching">Searching</string>
+
+    <string name="button">button</string>string>
+    <string name="editText">editText</string>
+    <string name="editText2">editText2</string>
+
+    <string name="textView2">textView2</string>
+    <string name="button3">button3</string>
+    <string name="datePicker">datPicker</string>
+
+    <string name="textView">textView</string>
+    <string name="listview">listview</string>
+    <string name="textView3">textView3</string>
+    <string name="editText4">editText4</string>
+    <string name="button2">button2</string>
+
+    <string name="e_videos">Event Videos</string>
+    <string name="vid1">Vid1</string>
+    <string name="vid2">Vid2</string>
+    <string name="vid3">Vid3</string>
+    <string name="gps_information">Event Location</string>
+    <string name="add_info">Additional Information</string>
+    <string name="hints_details">Driver\'s Information&#8230; \nInsurance Number&#8230;</string>
+
+    <string name="loginidBt">ID</string>
+    <string name="loginpwBt">PASSWORD</string>
 </resources>
