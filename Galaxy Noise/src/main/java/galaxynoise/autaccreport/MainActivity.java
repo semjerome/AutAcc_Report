@@ -25,7 +25,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick (View v)
             {
-                Intent intent = new Intent(getApplicationContext(), searching.class);
+                Intent intent = new Intent(getApplicationContext(), ReportList.class);
                 startActivity(intent);
             }
         });

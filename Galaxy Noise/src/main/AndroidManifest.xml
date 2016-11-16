@@ -24,8 +24,7 @@
             android:label="@string/title_activity_report_content"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity android:name=".MainActivity" />
-        <activity android:name=".searching" />
-        <activity android:name=".lists"></activity>
+
     </application>
 
 </manifest>
