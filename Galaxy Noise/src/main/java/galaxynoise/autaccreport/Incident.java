@@ -14,15 +14,25 @@ public class Incident {
     double longi;
     double lati;
     int reportId;
+    String videoName;
     /*
 
      */
-    public Incident(int reportId, String incidentDate, double longi, double lati)
+    public Incident(int reportId, String incidentDate, double longi, double lati, String videoName)
     {
         this.reportId = reportId;
         this.incidentDate=incidentDate;
         this.longi=longi;
         this.lati = lati;
+        this.videoName = videoName;
+    }
+
+    public String getVideoName() {
+        return videoName;
+    }
+
+    public void setVideoName(String videoName) {
+        this.videoName = videoName;
     }
 
     public String getIncidentDate() {
