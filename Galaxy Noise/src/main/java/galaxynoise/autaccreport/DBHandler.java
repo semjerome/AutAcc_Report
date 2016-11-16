@@ -261,6 +261,41 @@ public class DBHandler extends SQLiteOpenHelper {
         // return contact list
         return incidentList;
     }
+    public Car selectCar(Incident incident)
+    {
+        Car car = new Car();
+
+        String selectQuery = "SELECT  * FROM " + TABLE_NAME2 +" Where "+ incident.getReportId();
+
+        SQLiteDatabase db = this.getWritableDatabase();
+        Cursor cursor = db.rawQuery(selectQuery, null);
+
+        if (cursor.moveToFirst()) {
+            car.setPlateNumber(cursor.getString(0));
+            car.setCarMake(cursor.getString(1));
+            car.setCarModel(cursor.getString(2));
+            car.setCarYEar(cursor.getInt(3));
+        }
+        return car;
+    }
+    public Driver selectDriver(Incident incident)
+    {
+        Driver driver = new Driver();
+
+        String selectQuery = "SELECT  * FROM " + TABLE_NAME3 +" Where "+ incident.getReportId();
+
+        SQLiteDatabase db = this.getWritableDatabase();
+        Cursor cursor = db.rawQuery(selectQuery, null);
+
+        if (cursor.moveToFirst()) {
+            driver.setDriverLicense(cursor.getString(0));
+            driver.setFirstName(cursor.getString(1));
+            driver.setLastName(cursor.getString(2));
+            driver.setGender(cursor.getString(3));
+            driver.setInsuranceNumber(cursor.getString(4));
+        }
+        return driver;
+    }
   /*  public int updateUser(User user) {
         SQLiteDatabase db = this.getWritableDatabase();
 
