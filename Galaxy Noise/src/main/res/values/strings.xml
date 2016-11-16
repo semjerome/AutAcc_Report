@@ -6,12 +6,29 @@
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
 
-    <string name="e_videos">Event Videos</string>
+    <!--Jabneel-->
+    <string name="e_videos">Video</string>
     <string name="vid1">Vid1</string>
     <string name="vid2">Vid2</string>
     <string name="vid3">Vid3</string>
-    <string name="gps_information">Event Location</string>
-    <string name="add_info">Additional Information</string>
+
+    <string name="gps_information">Location</string>
+    <string name="save">Save</string>
+
+    <string name="add_info">Information</string>
     <string name="hints_details">Driver\'s Information&#8230; \nInsurance Number&#8230;</string>
-    <string name="title_activity_test">TestActivity</string>
+    <string name="title_activity_location">Map</string>
+
+    <string name="showLocation">Show Location</string>
+    <string name="title_activity_blank">BlankActivity</string>
+    <string name="title_activity_maps">Map</string>
+
+    <string name="driver_name">Driver\'s Name:</string>
+    <string name="plate_number">Plate Number:</string>
+    <string name="event_date">Event Date:</string>
+    <string name="user_add_info">User\'s Additional Information:</string>
+
+    <string name="event_location">Event Location:</string>
+
+    <string name="vid_location">Video Location: </string>
 </resources>
