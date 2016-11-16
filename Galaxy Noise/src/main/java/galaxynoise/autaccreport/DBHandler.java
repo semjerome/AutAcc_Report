@@ -328,21 +328,38 @@ public class DBHandler extends SQLiteOpenHelper {
         db.close(); // Closing database connection
     }
 
-  /*  public int updateUser(User user) {
+    public int updateDriver(Driver driver, Incident incident) {
         SQLiteDatabase db = this.getWritableDatabase();
 
         ContentValues values = new ContentValues();
-        values.put(COLUMN_NAME, user.getUser_name());
-        values.put(COLUMN_BDATE,user.getUser_bDate());
-        values.put(COLUMN_GENDER, user.getUser_gender());
-        values.put(COLUMN_MNUMBER,user.getUser_mNumber());
+        values.put(COLUMN_DRIVER_LINCENSE, driver.getDriverLicense());
+        values.put(COLUMN_FNAME,driver.getFirstName());
+        values.put(COLUMN_LNAME,driver.getLastName());
+        values.put(COLUMN_GENDER, driver.getGender());
+        values.put(COLUMN_INSURANCE,driver.getInsuranceNumber());
+        values.put(COLUMN_REPORTID,incident.getReportId());
 
 
-        return db.update(TABLE_NAME, values, COLUMN_ID + " = ?",
-                new String[] { String.valueOf(user.getUser_id()) });
+        return db.update(TABLE_NAME3, values, COLUMN_REPORTID + " = ?",
+                new String[] { String.valueOf(incident.getReportId()) });
     }
 
-*/
+    public int updateCar(Car car, Incident incident) {
+        SQLiteDatabase db = this.getWritableDatabase();
+
+        ContentValues values = new ContentValues();
+        values.put(COLUMN_PLATENUMBER, car.getPlateNumber());
+        values.put(COLUMN_CAR_MAKE, car.getCarMake());
+        values.put(COLUMN_CAR_MODEL, car.getCarModel());
+        values.put(COLUMN_CAR_YEAR, car.getCarYEar());
+        values.put(COLUMN_REPORTID, incident.getReportId());
+
+
+        return db.update(TABLE_NAME2, values, COLUMN_REPORTID + " = ?",
+                new String[] { String.valueOf(incident.getReportId()) });
+    }
+
+
     /*
     public List<User> selectAll() {
         ArrayList<User> contactList = new ArrayList<User>();
