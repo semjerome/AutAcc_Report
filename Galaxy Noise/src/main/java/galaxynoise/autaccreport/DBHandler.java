@@ -12,7 +12,7 @@ import java.util.Date;
 import java.util.List;
 
 /**
- * Created by semjeromers on 11/7/2016.
+ * Created by semjeromers on 11/1/2016.
  */
 
 public class DBHandler extends SQLiteOpenHelper {
