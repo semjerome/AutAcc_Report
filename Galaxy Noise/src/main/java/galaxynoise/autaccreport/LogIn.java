@@ -26,8 +26,8 @@ public class LogIn extends AppCompatActivity {
                 f.mkdirs();
                 f.createNewFile();
 
-                CopyDB(getBaseContext().getAssets().open("mydb"),
-                        new FileOutputStream(destPath + "/MyDB"));
+                CopyDB(getBaseContext().getAssets().open("reportdb"),
+                        new FileOutputStream(destPath + "/ReportDB"));
                 }
             }catch(FileNotFoundException e){
                 e.printStackTrace();
