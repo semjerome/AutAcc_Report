@@ -236,6 +236,31 @@ public class DBHandler extends SQLiteOpenHelper {
         db.close();
 
     }
+    public List<Incident> selectList(User user) {
+        ArrayList<Incident> incidentList = new ArrayList<Incident>();
+        String selectQuery = "SELECT  * FROM " + TABLE_NAME1 +" Where "+ user.getUid();
+
+        SQLiteDatabase db = this.getWritableDatabase();
+        Cursor cursor = db.rawQuery(selectQuery, null);
+
+
+
+        if (cursor.moveToFirst()) {
+            do {
+                Incident incident = new Incident();
+                incident.setReportId(cursor.getInt(0));
+                incident.setIncidentDate(cursor.getString(1));
+                incident.setLongli(cursor.getDouble(2));
+                incident.setLati(cursor.getDouble(3));
+                incident.setVideoName(cursor.getString(4));
+                incidentList.add(incident);
+            } while (cursor.moveToNext());
+        }
+
+        cursor.close();
+        // return contact list
+        return incidentList;
+    }
   /*  public int updateUser(User user) {
         SQLiteDatabase db = this.getWritableDatabase();
 
