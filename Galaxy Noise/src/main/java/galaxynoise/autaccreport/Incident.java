@@ -11,8 +11,8 @@ public class Incident {
 
 
     Date incidentDate;
-    int longli;
-    int lati;
+    double longli;
+    double lati;
     int reportId;
     /*
 
@@ -30,7 +30,7 @@ public class Incident {
         this.incidentDate = incidentDate;
     }
 
-    public int getLongli() {
+    public double getLongli() {
         return longli;
     }
 
@@ -38,7 +38,7 @@ public class Incident {
         this.longli = longli;
     }
 
-    public int getLati() {
+    public double getLati() {
         return lati;
     }
 
