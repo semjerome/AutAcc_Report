@@ -238,7 +238,7 @@ public class DBHandler extends SQLiteOpenHelper {
     }
     public List<Incident> selectList(User user) {
         ArrayList<Incident> incidentList = new ArrayList<Incident>();
-        String selectQuery = "SELECT  * FROM " + TABLE_NAME1 +" Where "+ user.getUid();
+        String selectQuery = "SELECT  * FROM " + TABLE_NAME1 +" Where "+COLUMN_ID+" ="+ user.getUid();
 
         SQLiteDatabase db = this.getWritableDatabase();
         Cursor cursor = db.rawQuery(selectQuery, null);
@@ -265,7 +265,7 @@ public class DBHandler extends SQLiteOpenHelper {
     {
         Car car = new Car();
 
-        String selectQuery = "SELECT  * FROM " + TABLE_NAME2 +" Where "+ incident.getReportId();
+        String selectQuery = "SELECT  * FROM " + TABLE_NAME2 +" Where "+COLUMN_REPORTID+" ="+ incident.getReportId();
 
         SQLiteDatabase db = this.getWritableDatabase();
         Cursor cursor = db.rawQuery(selectQuery, null);
@@ -282,7 +282,7 @@ public class DBHandler extends SQLiteOpenHelper {
     {
         Driver driver = new Driver();
 
-        String selectQuery = "SELECT  * FROM " + TABLE_NAME3 +" Where "+ incident.getReportId();
+        String selectQuery = "SELECT  * FROM " + TABLE_NAME3 +" Where "+COLUMN_REPORTID+" ="+ incident.getReportId();
 
         SQLiteDatabase db = this.getWritableDatabase();
         Cursor cursor = db.rawQuery(selectQuery, null);
@@ -396,8 +396,8 @@ public class DBHandler extends SQLiteOpenHelper {
     }
 */
 
-    public int getCount() {
-        String countQuery = "SELECT  * FROM " + TABLE_NAME;
+    public int getCount(User user) {
+        String countQuery = "SELECT  * FROM " + TABLE_NAME1 + " Where " + COLUMN_ID+"= " +user.getUid();
         SQLiteDatabase db = this.getReadableDatabase();
         Cursor cursor = db.rawQuery(countQuery, null);
         cursor.close();
