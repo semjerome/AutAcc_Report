@@ -18,6 +18,10 @@ public class Incident {
     /*
 
      */
+    public Incident()
+    {
+
+    }
     public Incident(int reportId, String incidentDate, double longi, double lati, String videoName)
     {
         this.reportId = reportId;
@@ -47,7 +51,7 @@ public class Incident {
         return longi;
     }
 
-    public void setLongli(int longi) {
+    public void setLongli(double longi) {
         this.longi = longi;
     }
 
@@ -55,7 +59,7 @@ public class Incident {
         return lati;
     }
 
-    public void setLati(int lati) {
+    public void setLati(double lati) {
         this.lati = lati;
     }
 

@@ -12,7 +12,7 @@ import java.util.Date;
 import java.util.List;
 
 /**
- * Created by semjeromers on 11/7/2016.
+ * Created by semjeromers on 11/1/2016.
  */
 
 public class DBHandler extends SQLiteOpenHelper {
@@ -235,6 +235,66 @@ public class DBHandler extends SQLiteOpenHelper {
                 new String[]{String.valueOf(driver.getDriverLicense())});
         db.close();
 
+    }
+    public List<Incident> selectList(User user) {
+        ArrayList<Incident> incidentList = new ArrayList<Incident>();
+        String selectQuery = "SELECT  * FROM " + TABLE_NAME1 +" Where "+ user.getUid();
+
+        SQLiteDatabase db = this.getWritableDatabase();
+        Cursor cursor = db.rawQuery(selectQuery, null);
+
+
+
+        if (cursor.moveToFirst()) {
+            do {
+                Incident incident = new Incident();
+                incident.setReportId(cursor.getInt(0));
+                incident.setIncidentDate(cursor.getString(1));
+                incident.setLongli(cursor.getDouble(2));
+                incident.setLati(cursor.getDouble(3));
+                incident.setVideoName(cursor.getString(4));
+                incidentList.add(incident);
+            } while (cursor.moveToNext());
+        }
+
+        cursor.close();
+        // return contact list
+        return incidentList;
+    }
+    public Car selectCar(Incident incident)
+    {
+        Car car = new Car();
+
+        String selectQuery = "SELECT  * FROM " + TABLE_NAME2 +" Where "+ incident.getReportId();
+
+        SQLiteDatabase db = this.getWritableDatabase();
+        Cursor cursor = db.rawQuery(selectQuery, null);
+
+        if (cursor.moveToFirst()) {
+            car.setPlateNumber(cursor.getString(0));
+            car.setCarMake(cursor.getString(1));
+            car.setCarModel(cursor.getString(2));
+            car.setCarYEar(cursor.getInt(3));
+        }
+        return car;
+    }
+    public Driver selectDriver(Incident incident)
+    {
+        Driver driver = new Driver();
+
+        String selectQuery = "SELECT  * FROM " + TABLE_NAME3 +" Where "+ incident.getReportId();
+
+        SQLiteDatabase db = this.getWritableDatabase();
+        Cursor cursor = db.rawQuery(selectQuery, null);
+
+        if (cursor.moveToFirst()) {
+            driver.setDriverLicense(cursor.getString(0));
+            driver.setFirstName(cursor.getString(1));
+            driver.setLastName(cursor.getString(2));
+            driver.setGender(cursor.getString(3));
+            driver.setInsuranceNumber(cursor.getString(4));
+        }
+        return driver;
     }
   /*  public int updateUser(User user) {
         SQLiteDatabase db = this.getWritableDatabase();
