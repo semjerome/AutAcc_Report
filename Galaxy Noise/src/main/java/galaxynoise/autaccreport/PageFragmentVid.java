@@ -27,7 +27,7 @@ public class PageFragmentVid extends Fragment {
     // Identifier for the permission request
     private static final int READ_CONTACTS_PERMISSIONS_REQUEST = 1;
 
-
+//hello
     public static PageFragmentVid create(int page) {
         Bundle args = new Bundle();
         args.putInt(ARG_PAGE, page);
