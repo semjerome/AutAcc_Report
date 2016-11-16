@@ -50,7 +50,7 @@ public class DBHandler extends SQLiteOpenHelper {
     public static final String COLUMN_GENDER ="gender";
     public static final String COLUMN_INSURANCE ="insurancenumber";
 
-
+//comment
 
     public DBHandler(Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
