@@ -31,6 +31,20 @@ public class ReportList extends AppCompatActivity {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
+        int id =0;
+        final Intent testIntent = new Intent(getApplicationContext(), VidActivity.class);
+        Intent intent = getIntent();
+        Bundle b = intent.getExtras();
+        if (b != null) {
+            id = (int) b.get("SomeStringData");
+        }
+        User user = new User();
+        user.setUid(id);
+        View view;
+        dbhandler = new DBHandler(getApplicationContext());
+        listPat=(ListView) findViewById(R.id.listAll);
+        showIncidenttList(user);
+
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -41,7 +55,7 @@ public class ReportList extends AppCompatActivity {
         });
 
     }
-        private void showPatientList(User user) {
+        private void showIncidenttList(User user) {
             ArrayList<Incident> incidentList = new ArrayList<Incident>();
             incidentList.clear();
 
