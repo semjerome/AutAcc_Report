@@ -1,5 +1,7 @@
 package galaxynoise.autaccreport;
 
+//Team name Galaxy Noise
+
 import android.content.Context;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
@@ -83,7 +85,7 @@ public class VidActivity extends AppCompatActivity implements View.OnClickListen
     @Override
     // Handle the Back Key
     public void onBackPressed() {
-
+        finish();
     }
     @Override
     public void onClick(View v) {
