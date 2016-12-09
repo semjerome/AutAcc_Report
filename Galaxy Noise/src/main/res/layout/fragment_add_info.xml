@@ -92,9 +92,9 @@
                     android:text="@string/event_date"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_alignStart="@+id/textView4"
+                    android:layout_alignStart="@+id/tvPW"
                     android:id="@+id/dateText"
-                    android:layout_below="@+id/textView4" />
+                    android:layout_below="@+id/tvPW" />
 
                 <EditText
                     android:layout_width="match_parent"

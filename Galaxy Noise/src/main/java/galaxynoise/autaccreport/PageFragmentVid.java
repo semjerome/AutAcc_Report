@@ -40,6 +40,7 @@ public class PageFragmentVid extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         mPage = getArguments().getInt(ARG_PAGE);
+
     }
 
     @Override
