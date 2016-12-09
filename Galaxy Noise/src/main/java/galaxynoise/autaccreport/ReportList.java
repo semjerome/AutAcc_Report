@@ -1,7 +1,6 @@
 package galaxynoise.autaccreport;
 
 /**
- * //Team name Galaxy Noise
  * planning on making it sliding tabs
  * With the incident list on first tab and then something lewse on secodn tab
  */
@@ -14,7 +13,6 @@ import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
-import android.widget.Button;
 import android.widget.ListView;
 
 import java.util.ArrayList;
@@ -32,28 +30,32 @@ public class ReportList extends AppCompatActivity {
         setContentView(R.layout.activity_report_list);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-        Button b1 = (Button) findViewById(R.id.btn1);
 
-    /*    FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
+        int id =0;
+        final Intent testIntent = new Intent(getApplicationContext(), VidActivity.class);
+        Intent intent = getIntent();
+        Bundle b = intent.getExtras();
+        if (b != null) {
+            id = (int) b.get("SomeStringData");
+        }
+        User user = new User();
+        user.setUid(id);
+        View view;
+        dbhandler = new DBHandler(getApplicationContext());
+        listPat=(ListView) findViewById(R.id.listAll);
+        showIncidenttList(user);
+
+        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
                         .setAction("Action", null).show();
             }
-        });*/
-
-        b1.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick (View v)
-            {
-                Intent intent = new Intent(getApplicationContext(), VidActivity.class);
-                startActivity(intent);
-            }
         });
 
     }
-        private void showPatientList(User user) {
+        private void showIncidenttList(User user) {
             ArrayList<Incident> incidentList = new ArrayList<Incident>();
             incidentList.clear();
 

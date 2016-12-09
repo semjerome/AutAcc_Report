@@ -12,7 +12,6 @@ import java.util.Date;
 import java.util.List;
 
 /**
- * Team name Galaxy Noise
  * Created by semjeromers on 11/1/2016.
  */
 
@@ -131,7 +130,7 @@ public class DBHandler extends SQLiteOpenHelper {
     }
 
     //GetIncident
-    Incident getIncident(String id) {
+    Incident getIncident(User id) {
         SQLiteDatabase db = this.getReadableDatabase();
 
 
@@ -153,7 +152,7 @@ public class DBHandler extends SQLiteOpenHelper {
         return incident;
     }
     //Get Car
-    Car getCar(String id) {
+    Car getCar(Incident id) {
         SQLiteDatabase db = this.getReadableDatabase();
 
 
@@ -174,7 +173,7 @@ public class DBHandler extends SQLiteOpenHelper {
         return car;
     }
     //Get Driver
-    Driver getDriver(String id) {
+    Driver getDriver(Incident id) {
         SQLiteDatabase db = this.getReadableDatabase();
 
 

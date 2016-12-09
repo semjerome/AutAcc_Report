@@ -10,7 +10,6 @@ import android.widget.TextView;
 import java.util.ArrayList;
 
 /**
- * Team name Galaxy Noise
  * Created by semjeromers on 11/16/2016.
  */
 

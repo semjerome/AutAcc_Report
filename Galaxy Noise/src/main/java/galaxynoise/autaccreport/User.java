@@ -9,6 +9,11 @@ public class User {
     String password;
     int uid;
 
+    User()
+    {
+
+    }
+
     public User(int uid, String userName, String password )
     {
         this.uid = uid;
