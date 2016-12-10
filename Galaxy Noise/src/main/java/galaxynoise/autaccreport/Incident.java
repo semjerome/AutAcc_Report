@@ -5,6 +5,7 @@ import java.util.Date;
 /**
  * Created by semjeromers on 11/7/2016.
  * Class object for Incident
+ * Team name Galaxy Noise
  */
 
 public class Incident {

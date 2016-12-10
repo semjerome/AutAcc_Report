@@ -3,7 +3,7 @@
         android:orientation="vertical"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:id="@+id/layout_details"
+        android:id="@+id/layout_car"
         android:layout_below="@+id/layout_gpsimage"
         android:layout_marginTop="@dimen/layout_dimension"
         android:layout_alignParentStart="true"
@@ -31,19 +31,19 @@
             android:layout_weight="1"
             android:id="@+id/layPlate"
             android:layout_below="@+id/layDrive"
-            android:layout_alignEnd="@+id/btnSave"
-            android:layout_marginTop="20dp">
+            android:layout_marginTop="20dp"
+            android:layout_alignParentEnd="true">
 
                 <TextView
                     android:text="@string/plate_number"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:id="@+id/plateText"
+                    android:id="@+id/txtPN"
                    />
 
                 <EditText
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
+                    android:layout_height="match_parent"
                     android:inputType="textPersonName"
                     android:ems="10"
                     android:textColorLink="@color/colorEditText"
@@ -55,18 +55,73 @@
             android:orientation="vertical"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:id="@+id/layAddInfo"
-            android:layout_marginBottom="81dp"
-            android:layout_above="@+id/btnSave"
+            android:id="@+id/layModel"
+            android:layout_below="@+id/layLName"
             android:layout_alignParentStart="true">
 
 
                 <TextView
-                    android:text="@string/user_add_info"
+                    android:text="Model:"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:id="@+id/userAddInfoText"
-                    android:layout_alignTop="@+id/layAddInfo"
+                    android:id="@+id/txtModel"
+                    android:layout_alignTop="@+id/layModel"
+                    android:layout_alignParentStart="true" />
+
+                <EditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="textPersonName"
+                android:textColorLink="@color/colorEditText"
+
+                android:ems="10"
+                android:id="@+id/etModel" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/layLName"
+            android:layout_below="@+id/layPlate"
+            android:layout_alignParentStart="true">
+
+                <TextView
+                    android:text="Brand:"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignStart="@+id/tvPW"
+                    android:id="@+id/txtMake"
+                    android:layout_below="@+id/tvPW" />
+
+                <EditText
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textColorLink="@color/colorEditText"
+
+                    android:inputType="textPersonName"
+                    android:ems="10"
+                    android:id="@+id/etBrand" />
+
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/layYear"
+            android:layout_below="@+id/layModel"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="13dp">
+
+                <TextView
+                    android:text="Year:"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/txtYear"
+                    android:layout_alignTop="@+id/layModel"
                     android:layout_alignParentStart="true" />
 
                 <EditText
@@ -76,65 +131,7 @@
                     android:textColorLink="@color/colorEditText"
 
                     android:ems="10"
-                    android:id="@+id/etAddInfo" />
-        </LinearLayout>
-
-        <LinearLayout
-            android:orientation="vertical"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:id="@+id/layDate"
-            android:layout_below="@+id/layPlate"
-            android:layout_alignParentStart="true"
-            android:layout_marginTop="12dp">
-
-                <TextView
-                    android:text="@string/event_date"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignStart="@+id/textView4"
-                    android:id="@+id/dateText"
-                    android:layout_below="@+id/textView4" />
-
-                <EditText
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:textColorLink="@color/colorEditText"
-
-                    android:inputType="textPersonName"
-                    android:ems="10"
-                    android:id="@+id/etDate" />
-
-
-        </LinearLayout>
-
-        <LinearLayout
-            android:orientation="vertical"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:id="@+id/layDrive"
-            android:layout_marginTop="30dp"
-            android:layout_alignParentTop="true"
-            android:layout_alignParentStart="true">
-
-                <TextView
-                    android:text="@string/driver_name"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:id="@+id/driverText"
-
-                    android:layout_weight="1" />
-
-                <EditText
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:textColorLink="@color/colorEditText"
-
-                    android:inputType="textPersonName"
-                    android:ems="10"
-                    android:id="@+id/etDriver"
-                    android:layout_weight="1" />
-
+                    android:id="@+id/etYear" />
 
         </LinearLayout>
 

@@ -13,10 +13,10 @@
         android:text="@string/log_in"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/editText2"
-        android:layout_alignEnd="@+id/editText"
+        android:layout_below="@+id/etUserName"
+        android:layout_alignEnd="@+id/etPW"
         android:layout_marginTop="52dp"
-        android:id="@+id/button" />
+        android:id="@+id/btnLogin" />
 
     <EditText
         android:layout_width="wrap_content"
@@ -24,9 +24,9 @@
         android:inputType="textPassword"
         android:ems="10"
         android:layout_marginBottom="182dp"
-        android:id="@+id/editText"
+        android:id="@+id/etPW"
         android:layout_alignParentBottom="true"
-        android:layout_alignStart="@+id/editText2"
+        android:layout_alignStart="@+id/etUserName"
         tools:ignore="LabelFor" />
 
     <TextView
@@ -35,29 +35,29 @@
         android:textStyle="bold"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/textView4"
-        android:layout_alignBottom="@+id/editText"
-        android:layout_toStartOf="@+id/editText" />
+        android:id="@+id/tvPW"
+        android:layout_alignBottom="@+id/etPW"
+        android:layout_toStartOf="@+id/etPW" />
 
     <TextView
-        android:text="@string/Id"
+        android:text="@string/username"
         android:textSize="18sp"
         android:textStyle="bold"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/textView5"
+        android:id="@+id/tvUserName"
         android:layout_marginEnd="22dp"
         android:layout_centerVertical="true"
-        android:layout_toStartOf="@+id/editText2" />
+        android:layout_toStartOf="@+id/etUserName" />
 
     <EditText
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:inputType="text|textPersonName"
         android:ems="10"
-        android:id="@+id/editText2"
+        android:id="@+id/etUserName"
         android:layout_marginEnd="22dp"
-        android:layout_above="@+id/editText"
+        android:layout_above="@+id/etPW"
         android:layout_alignParentEnd="true"
         tools:ignore="LabelFor" />
 
