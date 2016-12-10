@@ -3,6 +3,7 @@ package galaxynoise.autaccreport;
 //Team name Galaxy Noise
 
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.design.widget.TabLayout;
@@ -16,18 +17,22 @@ import android.view.View;
 
 public class VidActivity extends AppCompatActivity implements View.OnClickListener {
     int drawables[] = {
-      R.drawable.ic_info,
+            R.drawable.ic_info,
             R.drawable.ic_location,
             R.drawable.ic_video
     };
 
+    Intent intent;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         //requestWindowFeature(Window.FEATURE_CUSTOM_TITLE);
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_vid);
-        //getWindow().setFeatureInt(Window.FEATURE_CUSTOM_TITLE, R.layout.fragment_add_info);
+        //getWindow().setFeatureInt(Window.FEATURE_CUSTOM_TITLE, R.layout.fragment_car);
+
+        //get DATA could include car
+        getDatFromReportList();
 
         ViewPager viewPager = (ViewPager) findViewById(R.id.viewpager);
         viewPager.setAdapter(new SampleFragmentPagerAdapter(getSupportFragmentManager(),
@@ -42,10 +47,25 @@ public class VidActivity extends AppCompatActivity implements View.OnClickListen
         tabLayout.getTabAt(2).setIcon(drawables[2]);
     }
 
+    void getDatFromReportList()
+    {
+        intent =  getIntent();
+        String pn = intent.getStringExtra("plate_number");
+        String  brand = intent.getStringExtra("brand");
+        String  model =intent.getStringExtra("model");
+        String year =intent.getStringExtra("year");
+
+        String fname = intent.getStringExtra("first_name");
+        String  lname =intent.getStringExtra("last_name");
+        String  license = intent.getStringExtra("license");
+        String gender= intent.getStringExtra("gender");
+        String insurance = intent.getStringExtra("insurance");
+    }
+
     public class SampleFragmentPagerAdapter extends FragmentPagerAdapter {
-        final int PAGE_COUNT = 3;
+        final int PAGE_COUNT = 4;
         private Context context;
-        private String tabTitles[] = new String[] { "Information","Location","Video" };
+        private String tabTitles[] = new String[] { "Car Information","Driver Information", "Location","Video" };
         Drawable myDrawable;
         String title;
 
@@ -73,6 +93,8 @@ public class VidActivity extends AppCompatActivity implements View.OnClickListen
                 case 2:
                     return tabTitles[2];
                 //return tabTitles[2];
+                case 3:
+                    return tabTitles[3];
             }
             return "";
         }

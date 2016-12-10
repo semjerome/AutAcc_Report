@@ -13,7 +13,7 @@
         android:text="@string/log_in"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/etID"
+        android:layout_below="@+id/etUserName"
         android:layout_alignEnd="@+id/etPW"
         android:layout_marginTop="52dp"
         android:id="@+id/btnLogin" />
@@ -26,7 +26,7 @@
         android:layout_marginBottom="182dp"
         android:id="@+id/etPW"
         android:layout_alignParentBottom="true"
-        android:layout_alignStart="@+id/etID"
+        android:layout_alignStart="@+id/etUserName"
         tools:ignore="LabelFor" />
 
     <TextView
@@ -40,22 +40,22 @@
         android:layout_toStartOf="@+id/etPW" />
 
     <TextView
-        android:text="@string/Id"
+        android:text="@string/username"
         android:textSize="18sp"
         android:textStyle="bold"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/tvID"
+        android:id="@+id/tvUserName"
         android:layout_marginEnd="22dp"
         android:layout_centerVertical="true"
-        android:layout_toStartOf="@+id/etID" />
+        android:layout_toStartOf="@+id/etUserName" />
 
     <EditText
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:inputType="text|textPersonName"
         android:ems="10"
-        android:id="@+id/etID"
+        android:id="@+id/etUserName"
         android:layout_marginEnd="22dp"
         android:layout_above="@+id/etPW"
         android:layout_alignParentEnd="true"

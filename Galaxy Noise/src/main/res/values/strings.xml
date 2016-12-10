@@ -11,7 +11,7 @@
     <string name="loginpwBt">PASSWORD</string>
     <string name="log_in">Log In</string>
     <string name="sign_in">Sign In</string>
-    <string name="Id">ID</string>
+    <string name="username">User Name: </string>
     <string name="title_activity_searching">Searching</string>
 
     <string name="button">button</string>string>
