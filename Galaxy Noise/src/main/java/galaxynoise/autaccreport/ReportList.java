@@ -35,15 +35,15 @@ public class ReportList extends AppCompatActivity {
         final Intent testIntent = new Intent(getApplicationContext(), VidActivity.class);
         Intent intent = getIntent();
         Bundle b = intent.getExtras();
-        if (b != null) {
-            id = (int) b.get("SomeStringData");
-        }
+        //if (b != null) {
+         //   id = (int) b.get("SomeStringData");
+        //}
         User user = new User();
         user.setUid(id);
         View view;
         dbhandler = new DBHandler(getApplicationContext());
         listPat=(ListView) findViewById(R.id.listAll);
-        showIncidenttList(user);
+        //showIncidenttList(user);
 
     }
         private void showIncidenttList(User user) {
