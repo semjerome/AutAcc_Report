@@ -23,7 +23,11 @@ public class VidActivity extends AppCompatActivity implements View.OnClickListen
             R.drawable.ic_video
     };
 
-    Intent intent;
+    String reportid;
+    String incidentdate;
+    String longitude;
+    String latitude;
+    String videoName;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -33,7 +37,26 @@ public class VidActivity extends AppCompatActivity implements View.OnClickListen
         //getWindow().setFeatureInt(Window.FEATURE_CUSTOM_TITLE, R.layout.fragment_car);
 
         //get DATA could include car
-        getDataFromReportList();
+
+        Intent intent =  getIntent();
+        /*String pn = intent.getStringExtra("plate_number");
+        String brand = intent.getStringExtra("brand");
+        String model =intent.getStringExtra("model");
+        String year =intent.getStringExtra("year");
+
+        String fname = intent.getStringExtra("first_name");
+        String  lname =intent.getStringExtra("last_name");
+        String  license = intent.getStringExtra("license");
+        String gender= intent.getStringExtra("gender");
+        String insurance = intent.getStringExtra("insurance");*/
+
+        reportid = intent.getStringExtra("reportid");
+        incidentdate =intent.getStringExtra("incidentdate");
+        longitude= intent.getStringExtra("longi");
+        latitude= intent.getStringExtra("lati");
+        videoName =intent.getStringExtra("videoName");
+
+        //getDataFromReportList();
 
         ViewPager viewPager = (ViewPager) findViewById(R.id.viewpager);
         viewPager.setAdapter(new SampleFragmentPagerAdapter(getSupportFragmentManager(),
@@ -50,30 +73,18 @@ public class VidActivity extends AppCompatActivity implements View.OnClickListen
 
     }
 
-    void getDataFromReportList()
+    public String [] getFromReport()
     {
-        intent =  getIntent();
-        String pn = intent.getStringExtra("plate_number");
-        String brand = intent.getStringExtra("brand");
-        String model =intent.getStringExtra("model");
-        String year =intent.getStringExtra("year");
-
-        String fname = intent.getStringExtra("first_name");
-        String  lname =intent.getStringExtra("last_name");
-        String  license = intent.getStringExtra("license");
-        String gender= intent.getStringExtra("gender");
-        String insurance = intent.getStringExtra("insurance");
-
-        String longitude= intent.getStringExtra("longitude");
-        String latitud= intent.getStringExtra("latitude");
-        String video_name =intent.getStringExtra("vide_name");
-
+        String fromReport [] = {reportid, incidentdate, longitude, latitude, videoName};
+        return fromReport;
     }
+
+
 
     public class SampleFragmentPagerAdapter extends FragmentPagerAdapter {
         final int PAGE_COUNT = 4;
         private Context context;
-        private String tabTitles[] = new String[] { "Car Information","Driver Information", "Location","Video" };
+        private String tabTitles[] = new String[] { "Car Info","Driver", "Location","Video" };
         Drawable myDrawable;
         String title;
 

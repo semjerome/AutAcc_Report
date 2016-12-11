@@ -37,6 +37,8 @@
 
     <string name="gps_information">Location</string>
     <string name="save">Save</string>
+    <string name="reverseGeo">Location</string>
+
 
     <string name="add_info">Information</string>
     <string name="hints_details">Driver\'s Information&#8230; \nInsurance Number&#8230;</string>
