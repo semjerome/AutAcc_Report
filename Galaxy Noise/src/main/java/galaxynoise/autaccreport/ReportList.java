@@ -45,7 +45,7 @@ public class ReportList extends AppCompatActivity {
 
         int id =0;
         final Intent testIntent = new Intent(getApplicationContext(), VidActivity.class);
-        Intent intent = getIntent();
+        /*Intent intent = getIntent();
         Bundle b = intent.getExtras();
         if (b != null) {
             id = (int) b.get("SomeStringData");
@@ -53,9 +53,10 @@ public class ReportList extends AppCompatActivity {
         User user = new User();
         user.setUid(id);
         View view;
-        dbhandler = new DBHandler(getApplicationContext());
+        dbhandler = new DBHandler(getApplicationContext());*/
         listIncident=(ListView) findViewById(R.id.listAll);
-        showIncidenttList(user);
+      //  showIncidenttList(user);
+        new GetInfo().execute();
 
     }
         private void showIncidenttList(User user) {
@@ -128,35 +129,22 @@ public class ReportList extends AppCompatActivity {
 
                     for (int i = 0; i < mainArray.length(); i++) {
 
-                        JSONObject insideJsonObject = mainArray.getJSONObject(i);
-
-                        if (insideJsonObject != null) {
+                        JSONObject incidentJsonObject = mainArray.getJSONObject(i);
 
 
 
-                            JSONArray addressJSON = insideJsonObject
-                                    .getJSONArray("address_components");
-                            // Log.d("Inside JSON ADDress : ", addressJSON.toString());
+                                if (incidentJsonObject != null) {
 
-
-
-                            for (int k = 0; k < addressJSON.length(); k++) {
-
-                                JSONObject incidentJSONObject = addressJSON
-                                        .getJSONObject(k);
-
-                                if (incidentJSONObject != null) {
-
-                                    String reportid = incidentJSONObject
+                                    String reportid = incidentJsonObject
                                             .getString("reportid");
                                     Log.d("Inside JSON LongName : ", reportid);
-                                    String incidentdate = incidentJSONObject
-                                            .getString("short_name");
-                                    String longi = incidentJSONObject
+                                    String incidentdate = incidentJsonObject
+                                            .getString("incidentdate");
+                                    String longi = incidentJsonObject
                                             .getString("longi");
-                                    String lati = incidentJSONObject
+                                    String lati = incidentJsonObject
                                             .getString("lati");
-                                    String videoName = incidentJSONObject
+                                    String videoName = incidentJsonObject
                                             .getString("videoName");
 
                                     HashMap<String, String> info = new HashMap<>();
@@ -170,10 +158,10 @@ public class ReportList extends AppCompatActivity {
                                     infolist.add(info);
 
 
-                                }
+
 
                             }
-                        }
+
 
                     }
 
@@ -196,7 +184,7 @@ public class ReportList extends AppCompatActivity {
              **/
              ListAdapter adapter = new SimpleAdapter(
              ReportList.this, infolist,
-             R.layout.content_report_list, new String[]{"report", "date"}, new int[]{R.id.tvreportName,
+             R.layout.content_report_list, new String[]{"reportid", "incidentdate"}, new int[]{R.id.tvreportName,
              R.id.tvdate});
 
              listIncident.setAdapter(adapter);
