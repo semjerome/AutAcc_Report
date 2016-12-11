@@ -9,6 +9,16 @@
         android:layout_height="wrap_content"
         android:orientation="horizontal"
         android:id="@+id/linearLayout">
+
+        <TextView
+            android:text="ReportID:"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/tvReportText"
+            android:layout_weight="1"
+            android:textSize="20dp"
+            android:textColor="#000" />
+
         <TextView
             android:id="@+id/tvreportName"
             android:layout_width="wrap_content"

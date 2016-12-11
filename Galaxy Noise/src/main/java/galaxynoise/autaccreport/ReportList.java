@@ -15,16 +15,26 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ListAdapter;
 import android.widget.ListView;
 import android.widget.SimpleAdapter;
+import android.widget.Toast;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
+import java.net.HttpURLConnection;
+import java.net.MalformedURLException;
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.HashMap;
+
+import static android.R.attr.data;
 
 public class ReportList extends AppCompatActivity {
 
@@ -43,83 +53,89 @@ public class ReportList extends AppCompatActivity {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        int id =0;
+        String id=null, username ;
         final Intent testIntent = new Intent(getApplicationContext(), VidActivity.class);
         Intent intent = getIntent();
         Bundle b = intent.getExtras();
         if (b != null) {
-            id = (int) b.get("SomeStringData");
+            id =  (String)b.get("uid");
+            username =  (String)b.get("name");
         }
+        /**
         User user = new User();
         user.setUid(id);
         View view;
-        dbhandler = new DBHandler(getApplicationContext());
+        dbhandler = new DBHandler(getApplicationContext());*/
         listIncident=(ListView) findViewById(R.id.listAll);
-        showIncidenttList(user);
+      //  showIncidenttList(user);
+        GetInfo info = new GetInfo();
+        info.execute(id);
+        listIncident.setOnItemClickListener(new AdapterView.OnItemClickListener() {
 
-    }
-        private void showIncidenttList(User user) {
-            ArrayList<Incident> incidentList = new ArrayList<Incident>();
-            incidentList.clear();
-
-            String query = "SELECT * FROM Incident WHERE uid="+ user.getUid();
-            Cursor c1 = dbhandler.selectQuery(query);
-
-            if (c1 != null && c1.getCount() != 0) {
-                if (c1.moveToFirst()) {
-                    do {
-                        Incident incident=new Incident();
-                        int reportIndex = c1.getColumnIndex(dbhandler.COLUMN_REPORTID);
-                        int incidateIndex = c1.getColumnIndex(dbhandler.COLUMN_INCIDENT_DATE);
-                        int longiIndex = c1.getColumnIndex(dbhandler.COLUMN_LONGI);
-                        int latiIndex = c1.getColumnIndex(dbhandler.COLUMN_LATI);
-                        int videoIndex = c1.getColumnIndex(dbhandler.COLUMN_VIDEO_NAME);
-                        incident.setReportId(c1.getInt(reportIndex));
-                        incident.setIncidentDate(c1.getString(incidateIndex));
-                        incident.setLongli(c1.getDouble(longiIndex));
-                        incident.setLati(c1.getDouble(latiIndex));
-                        incident.setVideoName(c1.getString(videoIndex));
-
-                        incidentList.add(incident);
-
-                    } while (c1.moveToNext());
-                }
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position,long arg3) {
+                view.setSelected(true);
+                Toast.makeText(ReportList.this, "Selected!", Toast.LENGTH_SHORT).show();
             }
-            c1.close();
-/*
-            PatientAdapter patientAdapter=new PatientAdapter(getActivity(),patientList);
-            listPat.setAdapter(patientAdapter);
+        });
+    }
 
-*/
-
-        }
     /**
      * Async task class to get json by making HTTP call
      */
-    private class GetInfo extends AsyncTask<Void, Void, Void> {
+     class GetInfo extends AsyncTask<String, Void, Void> {
 
         @Override
         protected void onPreExecute() {
             super.onPreExecute();
             // Showing progress dialog
 
-
-
         }
 
         @Override
-        protected Void doInBackground(Void... arg0) {
+        protected Void doInBackground(String... params) {
+            String uid = params[0];
             HTTPHandler sh = new HTTPHandler();
-
+            String data="";
+            int tmp;
             // Making a request to url and getting response
-            String url = "http://semjerome.com/app/incident.php";
-            String jsonStr = sh.makeServiceCall(url);
+            //String uri = "http://semjerome.com/app/incident.php";
+            //String jsonStr = sh.makeServiceCall(uri);
 
-            Log.e(TAG, "Response from url: " + jsonStr);
 
-            if (jsonStr != null) {
+            try {
+                URL url = new URL("http://semjerome.com/app/incident.php");
+                String urlParams = "uid="+uid;
+
+                HttpURLConnection httpURLConnection = (HttpURLConnection) url.openConnection();
+                httpURLConnection.setDoOutput(true);
+                OutputStream os = httpURLConnection.getOutputStream();
+                os.write(urlParams.getBytes());
+                os.flush();
+                os.close();
+
+                InputStream is = httpURLConnection.getInputStream();
+                while((tmp=is.read())!=-1){
+                    data+= (char)tmp;
+                }
+
+                is.close();
+                httpURLConnection.disconnect();
+
+
+            } catch (MalformedURLException e) {
+                e.printStackTrace();
+                //return "Exception: "+e.getMessage();
+            } catch (IOException e) {
+                e.printStackTrace();
+               // return "Exception: "+e.getMessage();
+            }
+
+            //Log.e(TAG, "Response from url: " + jsonStr);
+
+            if (data != null) {
                 try {
-                    JSONObject mainJsonObject = new JSONObject(jsonStr);
+                    JSONObject mainJsonObject = new JSONObject(data);
                     // Log.d("JSON Data : ", mainJsonObject.toString());
 
                     infolist.clear();
@@ -128,35 +144,22 @@ public class ReportList extends AppCompatActivity {
 
                     for (int i = 0; i < mainArray.length(); i++) {
 
-                        JSONObject insideJsonObject = mainArray.getJSONObject(i);
-
-                        if (insideJsonObject != null) {
+                        JSONObject incidentJsonObject = mainArray.getJSONObject(i);
 
 
 
-                            JSONArray addressJSON = insideJsonObject
-                                    .getJSONArray("address_components");
-                            // Log.d("Inside JSON ADDress : ", addressJSON.toString());
+                                if (incidentJsonObject != null) {
 
-
-
-                            for (int k = 0; k < addressJSON.length(); k++) {
-
-                                JSONObject incidentJSONObject = addressJSON
-                                        .getJSONObject(k);
-
-                                if (incidentJSONObject != null) {
-
-                                    String reportid = incidentJSONObject
+                                    String reportid = incidentJsonObject
                                             .getString("reportid");
                                     Log.d("Inside JSON LongName : ", reportid);
-                                    String incidentdate = incidentJSONObject
-                                            .getString("short_name");
-                                    String longi = incidentJSONObject
+                                    String incidentdate = incidentJsonObject
+                                            .getString("incidentdate");
+                                    String longi = incidentJsonObject
                                             .getString("longi");
-                                    String lati = incidentJSONObject
+                                    String lati = incidentJsonObject
                                             .getString("lati");
-                                    String videoName = incidentJSONObject
+                                    String videoName = incidentJsonObject
                                             .getString("videoName");
 
                                     HashMap<String, String> info = new HashMap<>();
@@ -170,10 +173,10 @@ public class ReportList extends AppCompatActivity {
                                     infolist.add(info);
 
 
-                                }
+
 
                             }
-                        }
+
 
                     }
 
@@ -183,6 +186,7 @@ public class ReportList extends AppCompatActivity {
                 }
 
             }
+
             return null;
         }
 
@@ -196,7 +200,7 @@ public class ReportList extends AppCompatActivity {
              **/
              ListAdapter adapter = new SimpleAdapter(
              ReportList.this, infolist,
-             R.layout.content_report_list, new String[]{"report", "date"}, new int[]{R.id.tvreportName,
+             R.layout.content_report_list, new String[]{"reportid", "incidentdate"}, new int[]{R.id.tvreportName,
              R.id.tvdate});
 
              listIncident.setAdapter(adapter);
