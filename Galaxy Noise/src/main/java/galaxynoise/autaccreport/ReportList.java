@@ -14,11 +14,13 @@ import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
+import android.util.SparseBooleanArray;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListAdapter;
 import android.widget.ListView;
 import android.widget.SimpleAdapter;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import org.json.JSONArray;
@@ -35,6 +37,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 import static android.R.attr.data;
+import static android.R.id.list;
 
 public class ReportList extends AppCompatActivity {
 
@@ -75,7 +78,22 @@ public class ReportList extends AppCompatActivity {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position,long arg3) {
                 view.setSelected(true);
-                Toast.makeText(ReportList.this, "Selected!", Toast.LENGTH_SHORT).show();
+                //Toast.makeText(ReportList.this, "Selected!", Toast.LENGTH_SHORT).show();
+                HashMap<String,String> map =(HashMap<String,String>)listIncident.getItemAtPosition(position);
+                String reportid = map.get("reportid");
+                String idate = map.get("incidentdate");
+                String longi = map.get("longi");
+                String lati = map.get("lati");
+                String videoName = map.get("videoName");
+                //String name= map.get(TAG_NAME);
+                Toast.makeText(ReportList.this, reportid, Toast.LENGTH_SHORT).show();
+                Intent i = new Intent(ReportList.this, VidActivity.class);
+                i.putExtra("reportid", reportid);
+                i.putExtra("incidentdate", idate);
+                i.putExtra("longi", longi);
+                i.putExtra("lati", lati);
+                i.putExtra("vdieoName", videoName);
+                startActivity(i);
             }
         });
     }
