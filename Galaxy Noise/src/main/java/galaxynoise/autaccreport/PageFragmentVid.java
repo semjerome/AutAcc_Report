@@ -156,6 +156,7 @@ public class PageFragmentVid extends Fragment {
         return view;
     }
 
+
     // Called when the user is performing an action which requires the app to read the
     // user's contacts
     public void getPermissionToReadUserContacts() {
