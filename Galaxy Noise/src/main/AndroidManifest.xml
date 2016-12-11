@@ -37,10 +37,6 @@
         </activity>
         <activity
             android:name=".ReportList"
-            android:label="@string/title_activity_report_list"
-            android:theme="@style/AppTheme.NoActionBar" />
-        <activity
-            android:name=".ReportContent"
             android:label="@string/title_activity_report_content"
             android:theme="@style/AppTheme.NoActionBar" />
 

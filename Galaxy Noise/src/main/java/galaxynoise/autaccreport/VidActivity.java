@@ -17,7 +17,8 @@ import android.view.View;
 
 public class VidActivity extends AppCompatActivity implements View.OnClickListener {
     int drawables[] = {
-            R.drawable.ic_info,
+            R.drawable.ic_car,
+            R.drawable.ic_driver,
             R.drawable.ic_location,
             R.drawable.ic_video
     };
@@ -32,7 +33,7 @@ public class VidActivity extends AppCompatActivity implements View.OnClickListen
         //getWindow().setFeatureInt(Window.FEATURE_CUSTOM_TITLE, R.layout.fragment_car);
 
         //get DATA could include car
-        getDatFromReportList();
+        getDataFromReportList();
 
         ViewPager viewPager = (ViewPager) findViewById(R.id.viewpager);
         viewPager.setAdapter(new SampleFragmentPagerAdapter(getSupportFragmentManager(),
@@ -45,14 +46,16 @@ public class VidActivity extends AppCompatActivity implements View.OnClickListen
         tabLayout.getTabAt(0).setIcon(drawables[0]);
         tabLayout.getTabAt(1).setIcon(drawables[1]);
         tabLayout.getTabAt(2).setIcon(drawables[2]);
+        tabLayout.getTabAt(3).setIcon(drawables[3]);
+
     }
 
-    void getDatFromReportList()
+    void getDataFromReportList()
     {
         intent =  getIntent();
         String pn = intent.getStringExtra("plate_number");
-        String  brand = intent.getStringExtra("brand");
-        String  model =intent.getStringExtra("model");
+        String brand = intent.getStringExtra("brand");
+        String model =intent.getStringExtra("model");
         String year =intent.getStringExtra("year");
 
         String fname = intent.getStringExtra("first_name");
@@ -60,6 +63,11 @@ public class VidActivity extends AppCompatActivity implements View.OnClickListen
         String  license = intent.getStringExtra("license");
         String gender= intent.getStringExtra("gender");
         String insurance = intent.getStringExtra("insurance");
+
+        String longitude= intent.getStringExtra("longitude");
+        String latitud= intent.getStringExtra("latitude");
+        String video_name =intent.getStringExtra("vide_name");
+
     }
 
     public class SampleFragmentPagerAdapter extends FragmentPagerAdapter {
