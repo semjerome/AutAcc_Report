@@ -146,8 +146,6 @@ public class ReportList extends AppCompatActivity {
 
                         JSONObject incidentJsonObject = mainArray.getJSONObject(i);
 
-
-
                                 if (incidentJsonObject != null) {
 
                                     String reportid = incidentJsonObject
@@ -171,10 +169,6 @@ public class ReportList extends AppCompatActivity {
 
                                     // adding contact to contact list
                                     infolist.add(info);
-
-
-
-
                             }
 
 
@@ -200,8 +194,8 @@ public class ReportList extends AppCompatActivity {
              **/
              ListAdapter adapter = new SimpleAdapter(
              ReportList.this, infolist,
-             R.layout.content_report_list, new String[]{"reportid", "incidentdate"}, new int[]{R.id.tvreportName,
-             R.id.tvdate});
+             R.layout.content_report_list, new String[]{"reportid", "incidentdate", "longi", "lati", "videoName"}, new int[]{R.id.tvreportName,
+             R.id.tvdate,R.id.tvLongi,R.id.tvLati,R.id.tvVid});
 
              listIncident.setAdapter(adapter);
 
