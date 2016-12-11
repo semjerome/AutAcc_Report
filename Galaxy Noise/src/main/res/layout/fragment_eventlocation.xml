@@ -3,21 +3,20 @@
 android:layout_width="match_parent"
 android:layout_height="match_parent" >
 
+
+    <TextView
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+        android:text="@string/reverseGeo"
+    android:id="@+id/tvReverseGeo"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentStart="true" />
+
     <com.google.android.gms.maps.MapView
+        android:id="@+id/mapView"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:id="@+id/mapView"
-        android:layout_centerVertical="true"
-        android:layout_alignParentEnd="true" />
-
-    <Button
-        android:text="@string/showLocation"
-        android:layout_width="200dp"
-        android:layout_height="wrap_content"
-        android:id="@+id/btnShowLocation"
-        android:background="@drawable/buttonshape"
-        android:drawableRight="@drawable/ic_location"
-        android:layout_centerVertical="true"
-        android:layout_centerHorizontal="true" />
-
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentStart="true"
+        android:layout_below="@+id/tvReverseGeo" />
 </RelativeLayout>

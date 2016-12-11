@@ -92,7 +92,7 @@ public class ReportList extends AppCompatActivity {
                 i.putExtra("incidentdate", idate);
                 i.putExtra("longi", longi);
                 i.putExtra("lati", lati);
-                i.putExtra("vdieoName", videoName);
+                i.putExtra("videoName", videoName);
                 startActivity(i);
             }
         });

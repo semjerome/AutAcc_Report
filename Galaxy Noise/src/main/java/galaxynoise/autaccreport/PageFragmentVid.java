@@ -5,11 +5,16 @@ package galaxynoise.autaccreport;
  */
 import android.Manifest;
 import android.app.ProgressDialog;
+import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.location.Address;
+import android.location.Geocoder;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.support.annotation.RequiresPermission;
+import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
 import android.support.v4.content.ContextCompat;
 import android.util.Log;
@@ -21,6 +26,16 @@ import android.widget.EditText;
 import android.widget.MediaController;
 import android.widget.TextView;
 import android.widget.VideoView;
+
+import com.google.android.gms.location.LocationServices;
+import com.google.android.gms.maps.CameraUpdateFactory;
+import com.google.android.gms.maps.GoogleMap;
+import com.google.android.gms.maps.MapView;
+import com.google.android.gms.maps.MapsInitializer;
+import com.google.android.gms.maps.OnMapReadyCallback;
+import com.google.android.gms.maps.model.CameraPosition;
+import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.MarkerOptions;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -36,6 +51,7 @@ import java.net.MalformedURLException;
 import java.net.ProtocolException;
 import java.net.URL;
 import java.util.HashMap;
+import java.util.List;
 
 public class PageFragmentVid extends Fragment {
     public static final String ARG_PAGE = "ARG_PAGE";
@@ -50,6 +66,7 @@ public class PageFragmentVid extends Fragment {
     EditText etGender;
     EditText etInsurance;
 
+    String [] myData;
     private int mPage;
 
     //JSON
@@ -82,10 +99,22 @@ public class PageFragmentVid extends Fragment {
 
     }
 
+    GoogleMap googleMap;
+    MapView mMapView;
+    MarkerOptions markerOptions;
+    TextView tvReverseGeo;
+    public String addressText;
+
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
+        VidActivity activity = (VidActivity) getActivity();
+        myData = activity.getFromReport();
+        /*
+            0 = reportid , 1 = incidentdate, 2 = longi, 3 = lati, 4 = vidname
+         */
         if(mPage==1) //Car
         {
             view = inflater.inflate(R.layout.fragment_car, container, false);
@@ -93,6 +122,8 @@ public class PageFragmentVid extends Fragment {
             etBrand= (EditText) view.findViewById(R.id.etBrand);
             etModel= (EditText) view.findViewById(R.id.etModel);
             etYear = (EditText) view.findViewById(R.id.etYear);
+
+            etPN.setText(myData[0]);
         }
 
         else if(mPage==2)//Driver
@@ -106,16 +137,56 @@ public class PageFragmentVid extends Fragment {
         }
         else if(mPage==3)
         { //location
-             view = inflater.inflate(R.layout.fragment_eventlocation, container, false);
-            Button btnShow= (Button) view.findViewById(R.id.btnShowLocation);
+            /*
+            0 = reportid , 1 = incidentdate, 2 = longi, 3 = lati, 4 = vidname
+         */
 
+            view = inflater.inflate(R.layout.fragment_eventlocation, container, false);
+            tvReverseGeo = (TextView)view.findViewById(R.id.tvReverseGeo);
 
-            btnShow.setOnClickListener(new View.OnClickListener(){
+            mMapView = (MapView) view.findViewById(R.id.mapView);
+            mMapView.onCreate(savedInstanceState);
+
+            mMapView.onResume();
+
+            try{
+                MapsInitializer.initialize(getActivity().getApplicationContext());
+            }catch(Exception e){
+                e.printStackTrace();
+            }
+
+            mMapView.getMapAsync(new OnMapReadyCallback() {
                 @Override
-                public void onClick(View v){
-                    Intent intent = new Intent(getActivity(),  MapsActivity.class);
-                    ((VidActivity) getActivity()).startActivity(intent);
+                public void onMapReady(GoogleMap mMap) {
+                    googleMap = mMap;
+                    if(checkPermission())
+                    googleMap.setMyLocationEnabled(true);
+
+                    //double longi = Double.parseDouble(myData[2]);
+                    //double lati = Double.parseDouble(myData[3]);
+                    //toronto
+                    double lati = 43.65;
+                    double longi = -78.57;
+                    LatLng event = new LatLng(lati,longi);
+                    markerOptions = new MarkerOptions();
+
+                    Log.d("tv: ","not set");
+                    new ReverseGeoCodingTask(getContext()).execute(event);
+                    Log.d("tv: ",addressText);
+                    googleMap.addMarker(markerOptions.position(event)
+                            .title("Event Location")
+                            .snippet(addressText));
+
+                    CameraPosition cameraPosition = new CameraPosition.Builder().target(event).zoom(9).build();
+                    googleMap.animateCamera(CameraUpdateFactory.newCameraPosition(cameraPosition));
                 }
+
+                private boolean checkPermission()
+                {
+                    return (ContextCompat.checkSelfPermission(getActivity(), Manifest.permission.ACCESS_COARSE_LOCATION)
+                                == PackageManager.PERMISSION_GRANTED);
+                }
+
             });
         }
         else if (mPage == 4)
@@ -156,7 +227,47 @@ public class PageFragmentVid extends Fragment {
         return view;
     }
 
+    private class ReverseGeoCodingTask extends AsyncTask<LatLng, Void, String>{
+        Context mContext;
+        public ReverseGeoCodingTask(Context context){
+            super();
+            mContext = context;
+        }
 
+        @Override
+        protected String doInBackground(LatLng... params){
+            Geocoder geocoder  = new Geocoder(mContext);
+            double latitude = params[0].latitude;
+            double longitude = params[0].longitude;
+
+            List<Address> addresses = null;
+
+            try {
+            	addresses = geocoder.getFromLocation(latitude, longitude,1);
+            } catch (IOException e) {
+            	e.printStackTrace();
+            }
+
+            if(addresses!= null && addresses.size() > 0 ) {
+                addressText = addresses.get(0).getAddressLine(0) +"," +
+                        addresses.get(0).getLocality() +"," + addresses.get(0).getPostalCode() +
+                        ", " +addresses.get(0).getCountryName();
+            }
+
+            return addressText;
+
+        }
+
+        @Override
+        protected void onPostExecute(String addressText) {
+            // Setting the title for the marker.
+            // This will be displayed on taping the marker
+            // Placing a marker on the touched position
+            tvReverseGeo.setText(addressText);
+
+        }
+
+    }
     // Called when the user is performing an action which requires the app to read the
     // user's contacts
     public void getPermissionToReadUserContacts() {
