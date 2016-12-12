@@ -8,7 +8,7 @@
 
     <!--Jaewoong-->
     <string name="loginidBt">ID</string>
-    <string name="loginpwBt">PASSWORD</string>
+    <string name="loginpwBt">PASSWORD: </string>
     <string name="log_in">Log In</string>
     <string name="sign_in">Sign In</string>
     <string name="username">USERNAME: </string>
