@@ -23,7 +23,9 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ListAdapter;
 import android.widget.MediaController;
+import android.widget.SimpleAdapter;
 import android.widget.TextView;
 import android.widget.Toast;
 import android.widget.VideoView;
@@ -52,6 +54,7 @@ import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.ProtocolException;
 import java.net.URL;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
@@ -81,6 +84,8 @@ public class PageFragmentVid extends Fragment {
     private ProgressDialog pDialog;
     private String TAG = VidActivity.class.getSimpleName();
 
+    //Arraylist
+    ArrayList<HashMap<String, String>> carinfo = new ArrayList<>(3);
 
     Button btnCarUpdate;
     Button btnDriverUpdate;
@@ -142,6 +147,8 @@ public class PageFragmentVid extends Fragment {
                     executeAddCar();
                 }
             });
+            GetCar b = new GetCar();
+            b.execute(reportid);
         }
 
         else if(mPage==2)//Driver
@@ -377,24 +384,141 @@ public class PageFragmentVid extends Fragment {
             }
         }
     }
-    // Called when the user is performing an action which requires the app to read the
-    // user's contacts
-    public void getPermissionToReadUserContacts() {
-        // 1) Use the support library version ContextCompat.checkSelfPermission(...) to avoid
-        // checking the build version since Context.checkSelfPermission(...) is only available
-        // in Marshmallow
-        // 2) Always check for permission (even if permission has already been granted)
-        // since the user can revoke permissions at any time through Settings
-        if (ContextCompat.checkSelfPermission(getActivity(), Manifest.permission.READ_CONTACTS)
-                != PackageManager.PERMISSION_GRANTED) {
 
-            // The permission is NOT already granted.
-            // Check if the user has been asked about this permission already and denied
-            // it. If so, we want to give more explanation about why the permission is needed.
+    //get Car
+    class GetCar extends AsyncTask<String, Void, Void> {
 
-            // Fire off an async request to actually get the permission
-            // This will show the standard permission request dialog UI
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+            // Showing progress dialog
 
         }
+
+        @Override
+        protected Void doInBackground(String... params) {
+            String reportid = params[0];
+            HTTPHandler sh = new HTTPHandler();
+            String data = "";
+            int tmp;
+            // Making a request to url and getting response
+            //String uri = "http://semjerome.com/app/incident.php";
+            //String jsonStr = sh.makeServiceCall(uri);
+
+
+            try {
+                URL url = new URL("http://semjerome.com/app/getCar.php");
+                String urlParams = "reportid=" + reportid;
+
+                HttpURLConnection httpURLConnection = (HttpURLConnection) url.openConnection();
+                httpURLConnection.setDoOutput(true);
+                OutputStream os = httpURLConnection.getOutputStream();
+                os.write(urlParams.getBytes());
+                os.flush();
+                os.close();
+
+                InputStream is = httpURLConnection.getInputStream();
+                while ((tmp = is.read()) != -1) {
+                    data += (char) tmp;
+                }
+
+                is.close();
+                httpURLConnection.disconnect();
+
+
+            } catch (MalformedURLException e) {
+                e.printStackTrace();
+                //return "Exception: "+e.getMessage();
+            } catch (IOException e) {
+                e.printStackTrace();
+                // return "Exception: "+e.getMessage();
+            }
+
+            //Log.e(TAG, "Response from url: " + jsonStr);
+
+            if (data != null) {
+                try {
+                    JSONObject mainJsonObject = new JSONObject(data);
+                    // Log.d("JSON Data : ", mainJsonObject.toString());
+
+
+                    JSONArray mainArray = mainJsonObject.getJSONArray("Car");
+                    // Log.d("JSON Array : ", mainArray.toString());
+
+                    for (int i = 0; i < mainArray.length(); i++) {
+
+                        JSONObject incidentJsonObject = mainArray.getJSONObject(i);
+
+                        if (incidentJsonObject != null) {
+
+                            String platenumber = incidentJsonObject
+                                    .getString("platenumber");
+                            String carmake = incidentJsonObject
+                                    .getString("carmake");
+                            String carmodel = incidentJsonObject
+                                    .getString("carmodel");
+                            String caryear = incidentJsonObject
+                                    .getString("caryear");
+
+
+                            HashMap<String, String> info = new HashMap<>();
+                            info.put("platenumber", platenumber);
+                            info.put("carmake", carmake);
+                            info.put("carmodel", carmodel);
+                            info.put("caryear", caryear);
+
+                            // adding contact to contact list
+                            carinfo.add(info);
+                        }
+
+
+                    }
+
+                } catch (JSONException e) {
+                    // TODO Auto-generated catch block
+                    e.printStackTrace();
+                }
+
+            }
+
+            return null;
+        }
+
+        @Override
+        protected void onPostExecute(Void result) {
+            super.onPostExecute(result);
+            // Dismiss the progress dialog
+
+            /**
+             * Updating parsed JSON data into ListView
+             **/
+            if (carinfo.size() > 0) {
+                etPN.setText(carinfo.get(0).get("platenumber").toString());
+                etBrand.setText(carinfo.get(0).get("carmake").toString());
+                etModel.setText(carinfo.get(0).get("carmodel").toString());
+                etYear.setText(carinfo.get(0).get("caryear").toString());
+            }
+        }
+        }
+
+        // Called when the user is performing an action which requires the app to read the
+        // user's contacts
+        public void getPermissionToReadUserContacts() {
+            // 1) Use the support library version ContextCompat.checkSelfPermission(...) to avoid
+            // checking the build version since Context.checkSelfPermission(...) is only available
+            // in Marshmallow
+            // 2) Always check for permission (even if permission has already been granted)
+            // since the user can revoke permissions at any time through Settings
+            if (ContextCompat.checkSelfPermission(getActivity(), Manifest.permission.READ_CONTACTS)
+                    != PackageManager.PERMISSION_GRANTED) {
+
+                // The permission is NOT already granted.
+                // Check if the user has been asked about this permission already and denied
+                // it. If so, we want to give more explanation about why the permission is needed.
+
+                // Fire off an async request to actually get the permission
+                // This will show the standard permission request dialog UI
+
+            }
+        }
     }
-}
