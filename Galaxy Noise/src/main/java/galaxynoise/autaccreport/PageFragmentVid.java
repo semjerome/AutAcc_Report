@@ -317,9 +317,8 @@ public class PageFragmentVid extends Fragment {
         CARMAKE = etBrand.getText().toString();
         CARMODEL = etBrand.getText().toString();
         CARYEAR = etYear.getText().toString();
-        String addCarPHP ="addCar.php";
         AddCar a = new AddCar();
-        a.execute(PLATENUMBER, CARMAKE, CARMODEL, CARYEAR,reportid, addCarPHP);
+        a.execute(PLATENUMBER, CARMAKE, CARMODEL, CARYEAR,reportid);
     }
 
     class AddCar extends AsyncTask<String, String, String> {
@@ -335,18 +334,8 @@ public class PageFragmentVid extends Fragment {
             int tmp;
 
             try {
-                URL url;
-                if(params[5].equals("addCar.php")){
-                    url = new URL("http://semjerome.com/app/"+params[5]);
-                }
-                else if(params[5].equals("updateCar.php"))
-                {
-                    url = new URL("http://semjerome.com/app/"+params[5]);
-                }
-                else
-                {
-                    url=new URL("http://semjerome.com/app/"+params[5]);
-                }
+                URL url=new URL("http://semjerome.com/app/addCar.php");
+
                 String urlParams = "platenumber="+platenumber+"&carmake="+carmake+"&carmodel="
                         +carmodel+"&caryear="+caryear+"&reportid="+reportid;
 
