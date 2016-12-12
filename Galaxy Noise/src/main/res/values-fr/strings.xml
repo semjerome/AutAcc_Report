@@ -1,6 +1,6 @@
 <resources>
-    <string name="app_name">AutAcc Report</string>
-    <string name="title_activity_report_list">ReportList</string>
+    <string name="app_name">AutAcc rapport</string>
+    <string name="title_activity_report_list">Liste des rapports</string>
     <string name="title_activity_report_content">ReportContent</string>
 
     <!-- TODO: Remove or change this placeholder text -->
@@ -8,11 +8,11 @@
 
     <!--Jaewoong-->
     <string name="loginidBt">ID</string>
-    <string name="loginpwBt">PASSWORD</string>
+    <string name="loginpwBt">MOT DE PASSE</string>
     <string name="log_in">Log In</string>
-    <string name="sign_in">Sign In</string>
-    <string name="username">USERNAME: </string>
-    <string name="title_activity_searching">Searching</string>
+    <string name="sign_in">S identifier</string>
+    <string name="username">NOM D UTILISATEUR: </string>
+    <string name="title_activity_searching">Recherche</string>
 
     <string name="button">button</string>string>
     <string name="editText">editText</string>
@@ -35,27 +35,19 @@
     <string name="vid3">Vid3</string>
 
 
-    <string name="gps_information">Location</string>
-    <string name="add">Add</string>
-    <string name="update">Update</string>
-    <string name="save">Save</string>
-    <string name="call">Call</string>
-
-    <string name="rbc">RBC Insurance</string>
-    <string name="td">TD Insurance</string>
-    <string name="about">About</string>
-    <string name="caa">CAA Insurance</string>
-    <string name="des">Desjardins</string>
-    <string name="statefarm">State Farm</string>
+    <string name="gps_information">Emplacement</string>
+    <string name="add">Ajouter</string>
+    <string name="update">Mettre a jour</string>
+    <string name="save">sauvegarder</string>
 
     <string name="reverseGeo">Location</string>
-    <string name="displayInfo">Information Display</string>
+    <string name="displayInfo">Affichage d information</string>
 
     <string name="add_info">Information</string>
-    <string name="hints_details">Driver\'s Information&#8230; \nInsurance Number&#8230;</string>
+    <string name="hints_details">Driver\'s Information&#8230; \nInsurance Nombre&#8230;</string>
     <string name="title_activity_location">Map</string>
 
-    <string name="showLocation">Show Location</string>
+    <string name="showLocation">Afficher l emplacement</string>
     <string name="title_activity_blank">BlankActivity</string>
     <string name="title_activity_maps">Map</string>
 
@@ -64,13 +56,14 @@
     <string name="event_date">Event Date:</string>
     <string name="user_add_info">User\'s Additional Information:</string>
 
-    <string name="event_location">Event Location:</string>
+    <string name="event_location">Lieu de l événement:</string>
 
-    <string name="vid_location">Video Location: </string>
+    <string name="vid_location">Lieu de la vidéo: </string>
+
 
     <!--ReportList String-->
-    <string name="reportid">ReportId: </string>
+    <string name="reportid">ID du rapport: </string>
     <string name="longi">longi: </string>
     <string name="lati">lati: </string>
-    <string name="videon">Video Name: </string>
+    <string name="videon">Nom de la vidéo: </string>
 </resources>

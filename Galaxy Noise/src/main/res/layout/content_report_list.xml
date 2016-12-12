@@ -11,7 +11,7 @@
         android:id="@+id/linearLayout">
 
         <TextView
-            android:text="ReportID:"
+            android:text="@string/reportid"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:id="@+id/tvReportText"
@@ -41,7 +41,7 @@
         android:orientation="horizontal"
         android:id="@+id/lin1">
     <TextView
-        android:text="Longi:"
+        android:text="@string/longi"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/tvLongitext" />
@@ -58,7 +58,7 @@
         android:orientation="horizontal"
         android:id="@+id/lin2">
         <TextView
-            android:text="Lati:"
+            android:text="@string/lati"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:id="@+id/tvLatitext" />
@@ -75,7 +75,7 @@
         android:orientation="horizontal"
         android:id="@+id/lin3">
         <TextView
-            android:text="Video Name:"
+            android:text="@string/videon"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:id="@+id/tvVidtext" />
