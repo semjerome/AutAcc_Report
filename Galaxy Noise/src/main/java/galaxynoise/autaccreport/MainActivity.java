@@ -110,8 +110,6 @@ public class MainActivity extends AppCompatActivity {
         protected void onPostExecute(String s) {
             String err=null;
 
-
-
             try {
                 JSONObject root = new JSONObject(s);
                 //JSONObject user_data = root.getJSONObject("User");

@@ -25,6 +25,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.MediaController;
 import android.widget.TextView;
+import android.widget.Toast;
 import android.widget.VideoView;
 
 import com.google.android.gms.location.LocationServices;
@@ -46,6 +47,7 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.io.OutputStream;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.ProtocolException;
@@ -69,10 +71,19 @@ public class PageFragmentVid extends Fragment {
     String [] myData;
     private int mPage;
 
+    String PLATENUMBER= null;
+    String CARMAKE= null;
+    String CARMODEL= null;
+    String CARYEAR = null;
+
+    String reportid;
     //JSON
     private ProgressDialog pDialog;
     private String TAG = VidActivity.class.getSimpleName();
 
+
+    Button btnCarUpdate;
+    Button btnDriverUpdate;
 
     View view;
     // Identifier for the permission request
@@ -112,6 +123,7 @@ public class PageFragmentVid extends Fragment {
 
         VidActivity activity = (VidActivity) getActivity();
         myData = activity.getFromReport();
+        reportid =myData[0];
         /*
             0 = reportid , 1 = incidentdate, 2 = longi, 3 = lati, 4 = vidname
          */
@@ -123,17 +135,27 @@ public class PageFragmentVid extends Fragment {
             etModel= (EditText) view.findViewById(R.id.etModel);
             etYear = (EditText) view.findViewById(R.id.etYear);
 
-            etPN.setText(myData[0]);
+            btnCarUpdate = (Button)view.findViewById(R.id.btnCarUpdate);
+            btnCarUpdate.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    executeAddCar();
+                }
+            });
         }
 
         else if(mPage==2)//Driver
         {
             view= inflater.inflate(R.layout.fragment_driver,container, false);
+            String reportid = myData[0];
+            etLicense= (EditText) view.findViewById(R.id.etLicense);
             etFname = (EditText) view.findViewById(R.id.etFname);
             etLname= (EditText) view.findViewById(R.id.etLname);
-            etLicense= (EditText) view.findViewById(R.id.etLicense);
             etGender = (EditText) view.findViewById(R.id.etGender);
             etInsurance = (EditText) view.findViewById(R.id.etInsurance);
+
+
+
         }
         else if(mPage==3)
         { //location
@@ -165,17 +187,18 @@ public class PageFragmentVid extends Fragment {
                     //double longi = Double.parseDouble(myData[2]);
                     //double lati = Double.parseDouble(myData[3]);
                     //toronto
-                    double lati = 43.65;
-                    double longi = -78.57;
+                    double lati = 43.579028;
+                    double longi = -79.746524;
                     LatLng event = new LatLng(lati,longi);
                     markerOptions = new MarkerOptions();
 
                     Log.d("tv: ","not set");
                     new ReverseGeoCodingTask(getContext()).execute(event);
-                    Log.d("tv: ",addressText);
+                    //Log.d("tv: ",addressText);
+                    String snippetAddress = tvReverseGeo.getText().toString();
                     googleMap.addMarker(markerOptions.position(event)
                             .title("Event Location")
-                            .snippet(addressText));
+                            .snippet(snippetAddress));
 
                     CameraPosition cameraPosition = new CameraPosition.Builder().target(event).zoom(9).build();
                     googleMap.animateCamera(CameraUpdateFactory.newCameraPosition(cameraPosition));
@@ -207,10 +230,9 @@ public class PageFragmentVid extends Fragment {
                 Log.e("Error", e.getMessage());
                 e.printStackTrace();
             }
-            mVideoView.start();
             String filepath = "android.resource://"+ myPackage+ "R.raw.testvideo";
             TextView tv= (TextView) view.findViewById(R.id.tvVideoPath);
-            tv.setText(filepath);
+            tv.setText(filepath     );
             //MediaController videoMediaController = new MediaController(this);
             //mVideoView.setVideoPath(mUrl);
             //videoMediaController.setMediaPlayer(mVideoView);
@@ -266,7 +288,94 @@ public class PageFragmentVid extends Fragment {
             tvReverseGeo.setText(addressText);
 
         }
+    }
 
+    void executeAddCar()
+    {
+        PLATENUMBER = etPN.getText().toString();
+        CARMAKE = etBrand.getText().toString();
+        CARMODEL = etBrand.getText().toString();
+        CARYEAR = etYear.getText().toString();
+
+        AddCar a = new AddCar();
+        a.execute(PLATENUMBER, CARMAKE, CARMODEL, CARYEAR,reportid);
+    }
+
+    class AddCar extends AsyncTask<String, String, String> {
+
+        @Override
+        protected String doInBackground(String... params) {
+            String platenumber = params[0];
+            String carmake = params[1];
+            String carmodel = params[2];
+            String caryear = params[3];
+            String reportid = params[4];
+            String data="";
+            int tmp;
+
+            try {
+                URL url = new URL("http://semjerome.com/app/addCar.php");
+                String urlParams = "platenumber="+platenumber+"&carmake="+carmake+"&carmodel="
+                        +carmodel+"&caryear="+caryear+"&reportid"+reportid;
+
+                HttpURLConnection httpURLConnection = (HttpURLConnection) url.openConnection();
+                httpURLConnection.setDoOutput(true);
+                OutputStream os = httpURLConnection.getOutputStream();
+                os.write(urlParams.getBytes());
+                os.flush();
+                os.close();
+
+                InputStream is = httpURLConnection.getInputStream();
+                while((tmp=is.read())!=-1){
+                    data+= (char)tmp;
+                }
+
+                is.close();
+                httpURLConnection.disconnect();
+
+                return data;
+            } catch (MalformedURLException e) {
+                e.printStackTrace();
+                return "Exception: "+e.getMessage();
+            } catch (IOException e) {
+                e.printStackTrace();
+                return "Exception: "+e.getMessage();
+            }
+        }
+
+        @Override
+        protected void onPostExecute(String s) {
+            String err=null;
+
+            try {
+                JSONObject root = new JSONObject(s);
+                //JSONObject user_data = root.getJSONObject("User");
+
+                JSONObject car= root.getJSONObject("Car");
+
+                car.put("platenumber", PLATENUMBER);
+                car.put("carmake",CARMAKE);
+                car.put("carmodel",CARMODEL);
+                car.put("caryear",CARYEAR);
+                car.put("reportid",reportid);
+
+                Log.d("Storing to JSON plate: ", PLATENUMBER);
+                Log.d("Storing to JSON make: ", CARMAKE);
+                Log.d("Storing to JSON model: ", CARMODEL);
+
+
+            } catch (JSONException e) {
+                e.printStackTrace();
+                err = "Exception: "+e.getMessage();
+            }
+            if(PLATENUMBER!=null) {
+                Toast.makeText(getActivity(), "Stored!", Toast.LENGTH_SHORT).show();
+            }
+            else{
+                Toast.makeText(getActivity(), "Fill in plate number", Toast.LENGTH_LONG).show();
+
+            }
+        }
     }
     // Called when the user is performing an action which requires the app to read the
     // user's contacts
