@@ -248,9 +248,10 @@ public class PageFragmentVid extends Fragment {
             mediaController.setAnchorView(mVideoView);
             mVideoView.setMediaController(mediaController);
             String myPackage= "galaxynoise.autaccreport";
-            Uri uri = Uri.parse("http://semjerome.com/Android/"+vidname+".html");
+            Uri uri = Uri.parse("http://www.semjerome.com/Android/"+vidname+".mp4");
             try{
                mVideoView.setVideoURI(uri);
+                mVideoView.start();
             }catch(Exception e){
                 Log.e("Error", e.getMessage());
                 e.printStackTrace();
