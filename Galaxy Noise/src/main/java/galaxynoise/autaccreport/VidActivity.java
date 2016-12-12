@@ -11,6 +11,7 @@ import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
+import android.support.v4.content.ContextCompat;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
@@ -41,7 +42,7 @@ public class VidActivity extends AppCompatActivity implements View.OnClickListen
 
         //get DATA could include car
 
-        Intent intent =  getIntent();
+        Intent i =  getIntent();
         /*String pn = intent.getStringExtra("plate_number");
         String brand = intent.getStringExtra("brand");
         String model =intent.getStringExtra("model");
@@ -53,11 +54,11 @@ public class VidActivity extends AppCompatActivity implements View.OnClickListen
         String gender= intent.getStringExtra("gender");
         String insurance = intent.getStringExtra("insurance");*/
 
-        reportid = intent.getStringExtra("reportid");
-        incidentdate =intent.getStringExtra("incidentdate");
-        longitude= intent.getStringExtra("longi");
-        latitude= intent.getStringExtra("lati");
-        videoName =intent.getStringExtra("videoName");
+        reportid = i.getStringExtra("reportid");
+        incidentdate =i.getStringExtra("incidentdate");
+        longitude= i.getStringExtra("longi");
+        latitude= i.getStringExtra("lati");
+        videoName =i.getStringExtra("videoName");
 
         //getDataFromReportList();
 
@@ -145,6 +146,7 @@ public class VidActivity extends AppCompatActivity implements View.OnClickListen
     public boolean onOptionsItemSelected(MenuItem menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
         Intent intent = null;
+
         switch (menu.getItemId())
         {
             //Product website
@@ -154,36 +156,48 @@ public class VidActivity extends AppCompatActivity implements View.OnClickListen
                 startActivity(intent);
                 break;
 
+            //Insurance auto claims phone number
             case R.id.CAA:
-                intent = new Intent(Intent.ACTION_VIEW,
-                        Uri.parse("https://developer.android.com/training/appbar/setting-up.html"));
-                startActivity(intent);
+                try {
+                    intent = new Intent(Intent.ACTION_DIAL, Uri.parse("tel:" + "1-800-387-2656"));
+                    startActivity(intent);
+                } catch (Exception e) {
+                }
                 break;
             case R.id.TD:
-                intent = new Intent(Intent.ACTION_VIEW,
-                        Uri.parse("https://www.pizzahut.ca/menu/pizza"));
-                startActivity(intent);
+                try {
+                    intent = new Intent(Intent.ACTION_DIAL, Uri.parse("tel:" + "1-800-293-4941"));
+                    startActivity(intent);
+                } catch (Exception e) {
+
+                }
                 break;
             case R.id.RBC:
-                intent = new Intent(Intent.ACTION_VIEW,
-                        Uri.parse("https://semjerome.github.io/"));
-                startActivity(intent);
+                try {
+                    intent= new Intent(Intent.ACTION_DIAL, Uri.parse("tel:" + "1-877-748-7224"));
+                    startActivity(intent);
+                } catch (Exception e) {
+
+                }
                 break;
             case R.id.Desj:
-                intent = new Intent(Intent.ACTION_VIEW,
-                        Uri.parse("https://semjerome.github.io/"));
-                startActivity(intent);
+                try {
+                    intent = new Intent(Intent.ACTION_DIAL, Uri.parse("tel:" + "1-888-776-8343"));
+                    startActivity(intent);
+                } catch (Exception e) {
+
+                }
                 break;
             case R.id.Farm:
-                intent = new Intent(Intent.ACTION_VIEW,
-                        Uri.parse("https://semjerome.github.io/"));
-                startActivity(intent);
+                try {
+                    intent = new Intent(Intent.ACTION_DIAL, Uri.parse("tel:" + "855-209-9549"));
+                    startActivity(intent);
+                } catch (Exception e) {
+
+                }
                 break;
 
         }
-
-
-
         return super.onOptionsItemSelected(menu);
     }
 
