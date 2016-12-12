@@ -33,7 +33,7 @@
             </intent-filter>
         </activity>
         <activity android:name=".VidActivity"
-            android:label="Display Data">
+            android:label="@string/displayInfo">
         </activity>
         <activity
             android:name=".ReportList"
