@@ -18,6 +18,19 @@
         android:layout_alignParentEnd="true"
         android:layout_width="100dp" />
 
+    <Button
+        android:text="@string/update"
+        android:layout_height="wrap_content"
+        android:id="@+id/btnDriverUpdate"
+        android:drawableTop="@drawable/ic_save"
+        android:visibility="visible"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentStart="true"
+        android:layout_marginBottom="11dp"
+        android:layout_marginStart="14dp"
+        android:background="@drawable/buttonshape"
+        android:layout_width="100dp" />
+
     <ScrollView
     android:layout_height="match_parent"
     android:layout_width="match_parent"
@@ -65,6 +78,7 @@
             android:layout_height="wrap_content"
             android:id="@+id/layLname"
             android:layout_below="@+id/layFName"
+            android:background="@color/diff_lay_color"
             android:layout_alignParentStart="true">
 
             <TextView
@@ -120,7 +134,7 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:id="@+id/layLicense"
-            android:layout_above="@+id/layFname"
+            android:background="@color/diff_lay_color"
             android:layout_alignParentStart="true">
 
             <TextView
@@ -146,6 +160,7 @@
             android:layout_height="wrap_content"
             android:id="@+id/layInsuranceNumber"
             android:layout_below="@+id/layGender"
+            android:background="@color/diff_lay_color"
             android:layout_alignParentStart="true">
 
             <TextView

@@ -91,6 +91,9 @@ public class PageFragmentVid extends Fragment {
     Button btnCarAdd;
     Button btnDriverAdd;
 
+    Button btnCarUpdate;
+    Button btnDriverUpdate;
+
     View view;
     // Identifier for the permission request
     private static final int READ_CONTACTS_PERMISSIONS_REQUEST = 1;
@@ -142,14 +145,25 @@ public class PageFragmentVid extends Fragment {
             etYear = (EditText) view.findViewById(R.id.etYear);
 
             btnCarAdd = (Button)view.findViewById(R.id.btnCarAdd);
+            btnCarUpdate =(Button)view.findViewById(R.id.btnCarUpdate);
+
             btnCarAdd.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
                     executeAddCar();
                 }
             });
+
+            btnDriverUpdate.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    executeDriverAdd();
+                }
+            });
             GetCar b = new GetCar();
             b.execute(reportid);
+
+
         }
 
         else if(mPage==2)//Driver
@@ -162,12 +176,22 @@ public class PageFragmentVid extends Fragment {
             etGender = (EditText) view.findViewById(R.id.etGender);
             etInsurance = (EditText) view.findViewById(R.id.etInsurance);
             btnDriverAdd =(Button)view.findViewById(R.id.btnDriverAdd);
+            btnDriverUpdate =(Button)view.findViewById(R.id.btnDriverUpdate);
+
             btnDriverAdd.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
                     executeDriverAdd();
                 }
             });
+
+            btnDriverUpdate.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    executeDriverAdd();
+                }
+            });
+
             GetDriver g = new GetDriver();
             g.execute(reportid);
         }
