@@ -154,7 +154,7 @@ public class PageFragmentVid extends Fragment {
                 }
             });
 
-            btnDriverUpdate.setOnClickListener(new View.OnClickListener() {
+            btnCarUpdate.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
                     executeDriverAdd();
