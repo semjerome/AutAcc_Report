@@ -354,7 +354,7 @@ public class PageFragmentVid extends Fragment {
             try {
                 URL url = new URL("http://semjerome.com/app/addCar.php");
                 String urlParams = "platenumber="+platenumber+"&carmake="+carmake+"&carmodel="
-                        +carmodel+"&caryear="+caryear+"&reportid"+reportid;
+                        +carmodel+"&caryear="+caryear+"&reportid="+reportid;
 
                 HttpURLConnection httpURLConnection = (HttpURLConnection) url.openConnection();
                 httpURLConnection.setDoOutput(true);
@@ -562,7 +562,7 @@ public class PageFragmentVid extends Fragment {
             try {
                 URL url = new URL("http://semjerome.com/app/addDriver.php");
                 String urlParams = "driverlicense=" + driverlicense + "&fname=" + fname + "&lname="
-                        + lname + "&gender=" + gender + "&insuranceNumber=" + insurancenumber + "&reportid" + reportid;
+                        + lname + "&gender=" + gender + "&insuranceNumber=" + insurancenumber + "&reportid=" + reportid;
 
                 HttpURLConnection httpURLConnection = (HttpURLConnection) url.openConnection();
                 httpURLConnection.setDoOutput(true);
