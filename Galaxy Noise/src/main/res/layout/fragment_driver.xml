@@ -65,6 +65,7 @@
             android:layout_height="wrap_content"
             android:id="@+id/layLname"
             android:layout_below="@+id/layFName"
+            android:background="@color/diff_lay_color"
             android:layout_alignParentStart="true">
 
             <TextView
@@ -120,7 +121,7 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:id="@+id/layLicense"
-            android:layout_above="@+id/layFname"
+            android:background="@color/diff_lay_color"
             android:layout_alignParentStart="true">
 
             <TextView
@@ -146,6 +147,7 @@
             android:layout_height="wrap_content"
             android:id="@+id/layInsuranceNumber"
             android:layout_below="@+id/layGender"
+            android:background="@color/diff_lay_color"
             android:layout_alignParentStart="true">
 
             <TextView
