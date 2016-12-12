@@ -43,7 +43,7 @@ import static android.R.id.list;
 
 public class ReportList extends AppCompatActivity {
 
-    private DBHandler dbhandler;
+
     ListView listIncident;
     Intent currIntent;
     //PatientAdapter patientAdapter;
@@ -66,11 +66,7 @@ public class ReportList extends AppCompatActivity {
             id =  (String)b.get("uid");
             username =  (String)b.get("name");
         }
-        /**
-        User user = new User();
-        user.setUid(id);
-        View view;
-        dbhandler = new DBHandler(getApplicationContext());*/
+
         listIncident=(ListView) findViewById(R.id.listAll);
       //  showIncidenttList(user);
         GetInfo info = new GetInfo();
