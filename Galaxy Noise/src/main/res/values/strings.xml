@@ -38,6 +38,7 @@
     <string name="gps_information">Location</string>
     <string name="add">Add</string>
     <string name="update">Update</string>
+    <string name="save">Save</string>
 
     <string name="reverseGeo">Location</string>
     <string name="displayInfo">Information Display</string>

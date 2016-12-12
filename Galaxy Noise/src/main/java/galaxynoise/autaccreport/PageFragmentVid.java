@@ -91,8 +91,6 @@ public class PageFragmentVid extends Fragment {
     Button btnCarAdd;
     Button btnDriverAdd;
 
-    Button btnCarUpdate;
-    Button btnDriverUpdate;
 
     View view;
     // Identifier for the permission request
@@ -145,7 +143,6 @@ public class PageFragmentVid extends Fragment {
             etYear = (EditText) view.findViewById(R.id.etYear);
 
             btnCarAdd = (Button)view.findViewById(R.id.btnCarAdd);
-            btnCarUpdate =(Button)view.findViewById(R.id.btnCarUpdate);
 
             btnCarAdd.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -154,12 +151,7 @@ public class PageFragmentVid extends Fragment {
                 }
             });
 
-            btnCarUpdate.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    executeDriverAdd();
-                }
-            });
+
             GetCar b = new GetCar();
             b.execute(reportid);
 
@@ -176,16 +168,8 @@ public class PageFragmentVid extends Fragment {
             etGender = (EditText) view.findViewById(R.id.etGender);
             etInsurance = (EditText) view.findViewById(R.id.etInsurance);
             btnDriverAdd =(Button)view.findViewById(R.id.btnDriverAdd);
-            btnDriverUpdate =(Button)view.findViewById(R.id.btnDriverUpdate);
 
             btnDriverAdd.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    executeDriverAdd();
-                }
-            });
-
-            btnDriverUpdate.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
                     executeDriverAdd();
@@ -334,9 +318,9 @@ public class PageFragmentVid extends Fragment {
         CARMAKE = etBrand.getText().toString();
         CARMODEL = etBrand.getText().toString();
         CARYEAR = etYear.getText().toString();
-
+        String addCarPHP ="addCar.php";
         AddCar a = new AddCar();
-        a.execute(PLATENUMBER, CARMAKE, CARMODEL, CARYEAR,reportid);
+        a.execute(PLATENUMBER, CARMAKE, CARMODEL, CARYEAR,reportid, addCarPHP);
     }
 
     class AddCar extends AsyncTask<String, String, String> {
@@ -352,7 +336,18 @@ public class PageFragmentVid extends Fragment {
             int tmp;
 
             try {
-                URL url = new URL("http://semjerome.com/app/addCar.php");
+                URL url;
+                if(params[5].equals("addCar.php")){
+                    url = new URL("http://semjerome.com/app/"+params[5]);
+                }
+                else if(params[5].equals("updateCar.php"))
+                {
+                    url = new URL("http://semjerome.com/app/"+params[5]);
+                }
+                else
+                {
+                    url=new URL("http://semjerome.com/app/"+params[5]);
+                }
                 String urlParams = "platenumber="+platenumber+"&carmake="+carmake+"&carmodel="
                         +carmodel+"&caryear="+caryear+"&reportid="+reportid;
 
