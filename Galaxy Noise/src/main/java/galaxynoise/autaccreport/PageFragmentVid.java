@@ -256,9 +256,6 @@ public class PageFragmentVid extends Fragment {
                 Log.e("Error", e.getMessage());
                 e.printStackTrace();
             }
-            String filepath = "android.resource://"+ myPackage+ "R.raw.testvideo";
-            TextView tv= (TextView) view.findViewById(R.id.tvVideoPath);
-            tv.setText(filepath     );
             //MediaController videoMediaController = new MediaController(this);
             //mVideoView.setVideoPath(mUrl);
             //videoMediaController.setMediaPlayer(mVideoView);
