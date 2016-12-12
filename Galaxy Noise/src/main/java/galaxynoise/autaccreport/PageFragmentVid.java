@@ -13,7 +13,6 @@ import android.location.Geocoder;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.support.annotation.RequiresPermission;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
 import android.support.v4.content.ContextCompat;
@@ -79,6 +78,7 @@ public class PageFragmentVid extends Fragment {
     String CARMODEL= null;
     String CARYEAR = null;
 
+    String DRIVERLICENSE = null, FNAME=null,LNAME = null, GENDER = null, INSURANCENUMBER = null;
     String reportid;
     //JSON
     private ProgressDialog pDialog;
@@ -87,8 +87,8 @@ public class PageFragmentVid extends Fragment {
     //Arraylist
     ArrayList<HashMap<String, String>> carinfo = new ArrayList<>(3);
 
-    Button btnCarUpdate;
-    Button btnDriverUpdate;
+    Button btnCarAdd;
+    Button btnDriverAdd;
 
     View view;
     // Identifier for the permission request
@@ -140,8 +140,8 @@ public class PageFragmentVid extends Fragment {
             etModel= (EditText) view.findViewById(R.id.etModel);
             etYear = (EditText) view.findViewById(R.id.etYear);
 
-            btnCarUpdate = (Button)view.findViewById(R.id.btnCarUpdate);
-            btnCarUpdate.setOnClickListener(new View.OnClickListener() {
+            btnCarAdd = (Button)view.findViewById(R.id.btnCarAdd);
+            btnCarAdd.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
                     executeAddCar();
@@ -160,9 +160,13 @@ public class PageFragmentVid extends Fragment {
             etLname= (EditText) view.findViewById(R.id.etLname);
             etGender = (EditText) view.findViewById(R.id.etGender);
             etInsurance = (EditText) view.findViewById(R.id.etInsurance);
-
-
-
+            btnDriverAdd =(Button)view.findViewById(R.id.btnDriverAdd);
+            btnDriverAdd.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    executeDriverAdd();
+                }
+            });
         }
         else if(mPage==3)
         { //location
@@ -501,7 +505,97 @@ public class PageFragmentVid extends Fragment {
         }
         }
 
-        // Called when the user is performing an action which requires the app to read the
+    void executeDriverAdd()
+    {
+        //DRIVERLICENSE = null, FNAME=null,LNAME = null, GENDER = null, INSURANCENUMBER = null;
+        DRIVERLICENSE = etLicense.getText().toString();
+        FNAME = etFname.getText().toString();
+        LNAME = etLname.getText().toString();
+        GENDER = etGender.getText().toString();
+        INSURANCENUMBER = etInsurance.getText().toString();
+
+        AddDriver a = new AddDriver();
+        a.execute(DRIVERLICENSE, FNAME, FNAME, GENDER,INSURANCENUMBER,reportid);
+    }
+
+    //ADDING NEW DATA FOR DRIVER
+    class AddDriver extends AsyncTask<String, String, String> {
+
+        @Override
+        protected String doInBackground(String... params) {
+            String driverlicense = params[0];
+            String fname = params[1];
+            String lname= params[2];
+            String gender= params[3];
+            String insurancenumber= params[4];
+            String reportid= params[5];
+            String data="";
+            int tmp;
+
+            try {
+                URL url = new URL("http://semjerome.com/app/addCar.php");
+                String urlParams = "driverlicense="+driverlicense+"&fname="+fname+"&lname="
+                        +lname+"&gender="+gender+"&insuranceNumber"+insurancenumber+"&reportid"+reportid;
+
+                HttpURLConnection httpURLConnection = (HttpURLConnection) url.openConnection();
+                httpURLConnection.setDoOutput(true);
+                OutputStream os = httpURLConnection.getOutputStream();
+                os.write(urlParams.getBytes());
+                os.flush();
+                os.close();
+
+                InputStream is = httpURLConnection.getInputStream();
+                while((tmp=is.read())!=-1){
+                    data+= (char)tmp;
+                }
+
+                is.close();
+                httpURLConnection.disconnect();
+
+                return data;
+            } catch (MalformedURLException e) {
+                e.printStackTrace();
+                return "Exception: "+e.getMessage();
+            } catch (IOException e) {
+                e.printStackTrace();
+                return "Exception: "+e.getMessage();
+            }
+        }
+
+        @Override
+        protected void onPostExecute(String s) {
+            String err=null;
+            //Log.e(TAG, "Response from url: " + s);
+            try {
+                JSONObject root = new JSONObject(s);
+                //JSONObject user_data = root.getJSONObject("User");
+                JSONObject car = root.getJSONObject("Driver");
+
+                car.put("driverlicense", DRIVERLICENSE);
+                car.put("fname",FNAME);
+                car.put("lname",LNAME);
+                car.put("gender",GENDER);
+                car.put("insuranceNumber",INSURANCENUMBER);
+                car.put("reportid",reportid);
+
+            } catch (JSONException e) {
+                e.printStackTrace();
+                err = "Exception: "+e.getMessage();
+            }
+            if(PLATENUMBER!=null) {
+                Log.d("Storing to JSON plate: ", DRIVERLICENSE);
+                Log.d("Storing to JSON make: ", FNAME);
+                Log.d("Storing to JSON model: ", LNAME);
+                Toast.makeText(getActivity(), "Stored!", Toast.LENGTH_SHORT).show();
+            }
+            else{
+                Toast.makeText(getActivity(), "Fill in plate number", Toast.LENGTH_LONG).show();
+
+            }
+        }
+    }
+
+    // Called when the user is performing an action which requires the app to read the
         // user's contacts
         public void getPermissionToReadUserContacts() {
             // 1) Use the support library version ContextCompat.checkSelfPermission(...) to avoid

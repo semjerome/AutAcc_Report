@@ -4,11 +4,11 @@
     android:layout_height="match_parent">
 
     <Button
-        android:text="@string/update"
+        android:text="@string/add"
         android:layout_height="wrap_content"
         android:layout_marginEnd="14dp"
         android:layout_marginBottom="11dp"
-        android:id="@+id/btnCarUpdate"
+        android:id="@+id/btnCarAdd"
         android:drawableTop="@drawable/ic_save"
         android:elevation="0dp"
         android:visibility="visible"
