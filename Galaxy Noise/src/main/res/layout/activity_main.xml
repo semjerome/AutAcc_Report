@@ -81,7 +81,8 @@
                 android:ems="10"
                 android:id="@+id/etPW"
                 android:layout_alignParentBottom="true"
-                android:layout_alignStart="@+id/etUserName"
+                android:layout_alignBottom="@+id/tvPW"
+                android:layout_alignStart="@+id/tvPW"
                 tools:ignore="LabelFor" />
 
 

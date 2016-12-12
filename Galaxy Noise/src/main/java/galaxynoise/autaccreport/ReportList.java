@@ -45,10 +45,12 @@ public class ReportList extends AppCompatActivity {
 
 
     ListView listIncident;
+    public static boolean isListempty =true;
     Intent currIntent;
     //PatientAdapter patientAdapter;
     ArrayList<HashMap<String, String>> infolist = new ArrayList<>(3);
     private String TAG = ReportList.class.getSimpleName();
+    TextView tvnews;
     String id;
 
     @Override
@@ -68,6 +70,7 @@ public class ReportList extends AppCompatActivity {
         }
 
         listIncident=(ListView) findViewById(R.id.listAll);
+        tvnews=(TextView)findViewById((R.id.tvnews));
       //  showIncidenttList(user);
         GetInfo info = new GetInfo();
         info.execute(id);
@@ -208,12 +211,17 @@ public class ReportList extends AppCompatActivity {
             /**
              * Updating parsed JSON data into ListView
              **/
-             ListAdapter adapter = new SimpleAdapter(
-             ReportList.this, infolist,
-             R.layout.content_report_list, new String[]{"reportid", "incidentdate", "longi", "lati", "videoName"}, new int[]{R.id.tvreportName,
-             R.id.tvdate,R.id.tvLongi,R.id.tvLati,R.id.tvVid});
-
-             listIncident.setAdapter(adapter);
+            if (infolist.size() > 0) {
+                ListAdapter adapter = new SimpleAdapter(
+                        ReportList.this, infolist,
+                        R.layout.content_report_list, new String[]{"reportid", "incidentdate", "longi", "lati", "videoName"}, new int[]{R.id.tvreportName,
+                        R.id.tvdate, R.id.tvLongi, R.id.tvLati, R.id.tvVid});
+                listIncident.setAdapter(adapter);
+            }
+            else
+            {
+                tvnews.setText(R.string.news);
+            }
 
         }
 
