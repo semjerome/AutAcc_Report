@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <item android:id="@+id/about"
+        app:showAsAction="always"
+        android:title="About" />
+    <item android:id="@+id/TD"
+        app:showAsAction="never"
+        android:title="TD Insurance" />
+    <item android:id="@+id/RBC"
+        app:showAsAction="never"
+        android:title="RBC Insurance" />
+    <item android:id="@+id/Desj"
+        app:showAsAction="never"
+        android:title="Desjardins" />
+    <item android:id="@+id/CAA"
+        app:showAsAction="never"
+        android:title="CAA Insurance" />
+    <item android:id="@+id/Farm"
+        app:showAsAction="never"
+        android:title="State Farm" />
+
+
+</menu>

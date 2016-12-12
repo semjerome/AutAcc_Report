@@ -775,4 +775,5 @@ public class PageFragmentVid extends Fragment {
                 // This will show the standard permission request dialog UI
             }
         }
+
     }
