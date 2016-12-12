@@ -10,8 +10,8 @@
     <string name="loginidBt">ID</string>
     <string name="loginpwBt">MOT DE PASSE</string>
     <string name="log_in">Log In</string>
-    <string name="sign_in">S'identifier</string>
-    <string name="username">NOM D'UTILISATEUR: </string>
+    <string name="sign_in">S identifier</string>
+    <string name="username">NOM D UTILISATEUR: </string>
     <string name="title_activity_searching">Recherche</string>
 
     <string name="button">button</string>string>
@@ -37,17 +37,17 @@
 
     <string name="gps_information">Emplacement</string>
     <string name="add">Ajouter</string>
-    <string name="update">Mettre à jour</string>
+    <string name="update">Mettre a jour</string>
     <string name="save">sauvegarder</string>
 
     <string name="reverseGeo">Location</string>
-    <string name="displayInfo">Affichage d'information</string>
+    <string name="displayInfo">Affichage d information</string>
 
     <string name="add_info">Information</string>
     <string name="hints_details">Driver\'s Information&#8230; \nInsurance Nombre&#8230;</string>
     <string name="title_activity_location">Map</string>
 
-    <string name="showLocation">Afficher l'emplacement</string>
+    <string name="showLocation">Afficher l emplacement</string>
     <string name="title_activity_blank">BlankActivity</string>
     <string name="title_activity_maps">Map</string>
 
@@ -56,7 +56,7 @@
     <string name="event_date">Event Date:</string>
     <string name="user_add_info">User\'s Additional Information:</string>
 
-    <string name="event_location">Lieu de l'événement:</string>
+    <string name="event_location">Lieu de l événement:</string>
 
     <string name="vid_location">Lieu de la vidéo: </string>
 
