@@ -151,7 +151,6 @@ public class PageFragmentVid extends Fragment {
                 }
             });
 
-
             GetCar b = new GetCar();
             b.execute(reportid);
 
