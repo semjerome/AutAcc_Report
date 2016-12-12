@@ -62,6 +62,8 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void main_login(){
+        Name=null;
+        Password=null;
         Name = username.getText().toString();
         Password = password.getText().toString();
         BackGround b = new BackGround();
@@ -119,7 +121,7 @@ public class MainActivity extends AppCompatActivity {
                 // looping through All Contacts
                 for (int i = 0; i < mainArray.length(); i++) {
                     JSONObject insideJsonObject = mainArray.getJSONObject(i);
-
+                    EMAIL=null;
                     if (insideJsonObject != null) {
                         NAME = insideJsonObject.getString("username");
                         PASSWORD = insideJsonObject.getString("password");
