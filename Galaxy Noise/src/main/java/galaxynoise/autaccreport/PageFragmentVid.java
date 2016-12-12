@@ -209,11 +209,11 @@ public class PageFragmentVid extends Fragment {
                     if(checkPermission())
                     googleMap.setMyLocationEnabled(true);
 
-                    //double longi = Double.parseDouble(myData[2]);
-                    //double lati = Double.parseDouble(myData[3]);
+                    double longi = Double.parseDouble(myData[2]);
+                    double lati = Double.parseDouble(myData[3]);
                     //toronto
-                    double lati = 43.579028;
-                    double longi = -79.746524;
+                    //double lati = 43.579028;
+                    //double longi = -79.746524;
                     LatLng event = new LatLng(lati,longi);
                     markerOptions = new MarkerOptions();
 
