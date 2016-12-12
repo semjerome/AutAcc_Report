@@ -86,6 +86,7 @@ public class PageFragmentVid extends Fragment {
 
     //Arraylist
     ArrayList<HashMap<String, String>> carinfo = new ArrayList<>(3);
+    ArrayList<HashMap<String, String>> driverinfo = new ArrayList<>(3);
 
     Button btnCarAdd;
     Button btnDriverAdd;
@@ -167,6 +168,8 @@ public class PageFragmentVid extends Fragment {
                     executeDriverAdd();
                 }
             });
+            GetDriver g = new GetDriver();
+            g.execute(reportid);
         }
         else if(mPage==3)
         { //location
@@ -525,17 +528,17 @@ public class PageFragmentVid extends Fragment {
         protected String doInBackground(String... params) {
             String driverlicense = params[0];
             String fname = params[1];
-            String lname= params[2];
-            String gender= params[3];
-            String insurancenumber= params[4];
-            String reportid= params[5];
-            String data="";
+            String lname = params[2];
+            String gender = params[3];
+            String insurancenumber = params[4];
+            String reportid = params[5];
+            String data = "";
             int tmp;
 
             try {
-                URL url = new URL("http://semjerome.com/app/addCar.php");
-                String urlParams = "driverlicense="+driverlicense+"&fname="+fname+"&lname="
-                        +lname+"&gender="+gender+"&insuranceNumber"+insurancenumber+"&reportid"+reportid;
+                URL url = new URL("http://semjerome.com/app/addDriver.php");
+                String urlParams = "driverlicense=" + driverlicense + "&fname=" + fname + "&lname="
+                        + lname + "&gender=" + gender + "&insuranceNumber=" + insurancenumber + "&reportid" + reportid;
 
                 HttpURLConnection httpURLConnection = (HttpURLConnection) url.openConnection();
                 httpURLConnection.setDoOutput(true);
@@ -545,8 +548,8 @@ public class PageFragmentVid extends Fragment {
                 os.close();
 
                 InputStream is = httpURLConnection.getInputStream();
-                while((tmp=is.read())!=-1){
-                    data+= (char)tmp;
+                while ((tmp = is.read()) != -1) {
+                    data += (char) tmp;
                 }
 
                 is.close();
@@ -555,16 +558,16 @@ public class PageFragmentVid extends Fragment {
                 return data;
             } catch (MalformedURLException e) {
                 e.printStackTrace();
-                return "Exception: "+e.getMessage();
+                return "Exception: " + e.getMessage();
             } catch (IOException e) {
                 e.printStackTrace();
-                return "Exception: "+e.getMessage();
+                return "Exception: " + e.getMessage();
             }
         }
 
         @Override
         protected void onPostExecute(String s) {
-            String err=null;
+            String err = null;
             //Log.e(TAG, "Response from url: " + s);
             try {
                 JSONObject root = new JSONObject(s);
@@ -572,28 +575,147 @@ public class PageFragmentVid extends Fragment {
                 JSONObject car = root.getJSONObject("Driver");
 
                 car.put("driverlicense", DRIVERLICENSE);
-                car.put("fname",FNAME);
-                car.put("lname",LNAME);
-                car.put("gender",GENDER);
-                car.put("insuranceNumber",INSURANCENUMBER);
-                car.put("reportid",reportid);
+                car.put("fname", FNAME);
+                car.put("lname", LNAME);
+                car.put("gender", GENDER);
+                car.put("insuranceNumber", INSURANCENUMBER);
+                car.put("reportid", reportid);
 
             } catch (JSONException e) {
                 e.printStackTrace();
-                err = "Exception: "+e.getMessage();
+                err = "Exception: " + e.getMessage();
             }
-            if(PLATENUMBER!=null) {
+            if (DRIVERLICENSE != null) {
                 Log.d("Storing to JSON plate: ", DRIVERLICENSE);
                 Log.d("Storing to JSON make: ", FNAME);
                 Log.d("Storing to JSON model: ", LNAME);
                 Toast.makeText(getActivity(), "Stored!", Toast.LENGTH_SHORT).show();
-            }
-            else{
+            } else {
                 Toast.makeText(getActivity(), "Fill in plate number", Toast.LENGTH_LONG).show();
 
             }
         }
     }
+        //get Car
+        class GetDriver extends AsyncTask<String, Void, Void> {
+
+            @Override
+            protected void onPreExecute() {
+                super.onPreExecute();
+                // Showing progress dialog
+
+            }
+
+            @Override
+            protected Void doInBackground(String... params) {
+                String reportid = params[0];
+                HTTPHandler sh = new HTTPHandler();
+                String data = "";
+                int tmp;
+                // Making a request to url and getting response
+                //String uri = "http://semjerome.com/app/incident.php";
+                //String jsonStr = sh.makeServiceCall(uri);
+
+
+                try {
+                    URL url = new URL("http://semjerome.com/app/getDriver.php");
+                    String urlParams = "reportid=" + reportid;
+
+                    HttpURLConnection httpURLConnection = (HttpURLConnection) url.openConnection();
+                    httpURLConnection.setDoOutput(true);
+                    OutputStream os = httpURLConnection.getOutputStream();
+                    os.write(urlParams.getBytes());
+                    os.flush();
+                    os.close();
+
+                    InputStream is = httpURLConnection.getInputStream();
+                    while ((tmp = is.read()) != -1) {
+                        data += (char) tmp;
+                    }
+
+                    is.close();
+                    httpURLConnection.disconnect();
+
+
+                } catch (MalformedURLException e) {
+                    e.printStackTrace();
+                    //return "Exception: "+e.getMessage();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                    // return "Exception: "+e.getMessage();
+                }
+
+                //Log.e(TAG, "Response from url: " + jsonStr);
+
+                if (data != null) {
+                    try {
+                        JSONObject mainJsonObject = new JSONObject(data);
+                        // Log.d("JSON Data : ", mainJsonObject.toString());
+
+
+                        JSONArray mainArray = mainJsonObject.getJSONArray("Driver");
+                        // Log.d("JSON Array : ", mainArray.toString());
+
+                        for (int i = 0; i < mainArray.length(); i++) {
+
+                            JSONObject incidentJsonObject = mainArray.getJSONObject(i);
+
+                            if (incidentJsonObject != null) {
+
+                                String driverlicense = incidentJsonObject
+                                        .getString("driverlicense");
+                                String fname = incidentJsonObject
+                                        .getString("fname");
+                                String lname = incidentJsonObject
+                                        .getString("lname");
+                                String gender = incidentJsonObject
+                                        .getString("gender");
+                                String insurancenumber = incidentJsonObject
+                                        .getString("insuranceNumber");
+
+
+                                HashMap<String, String> info = new HashMap<>();
+                                info.put("driverlicense", driverlicense);
+                                info.put("fname", fname);
+                                info.put("lname", lname);
+                                info.put("gender", gender);
+                                info.put("insuranceNumber", insurancenumber);
+                                // adding contact to contact list
+                                driverinfo.add(info);
+                            }
+
+
+                        }
+
+                    } catch (JSONException e) {
+                        // TODO Auto-generated catch block
+                        e.printStackTrace();
+                    }
+
+                }
+
+                return null;
+            }
+
+            @Override
+            protected void onPostExecute(Void result) {
+                super.onPostExecute(result);
+                // Dismiss the progress dialog
+
+                /**
+                 * Updating parsed JSON data into ListView
+                 **/
+                if (driverinfo.size() > 0) {
+                    etLicense.setText(driverinfo.get(0).get("driverlicense").toString());
+                    etFname.setText(driverinfo.get(0).get("fname").toString());
+                    etLname.setText(driverinfo.get(0).get("lname").toString());
+                    etGender.setText(driverinfo.get(0).get("gender").toString());
+                    etInsurance.setText(driverinfo.get(0).get("insuranceNumber").toString());
+                }
+            }
+        }
+
+
 
     // Called when the user is performing an action which requires the app to read the
         // user's contacts
