@@ -772,7 +772,6 @@ public class PageFragmentVid extends Fragment {
 
                 // Fire off an async request to actually get the permission
                 // This will show the standard permission request dialog UI
-
             }
         }
     }
