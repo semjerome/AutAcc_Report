@@ -242,13 +242,13 @@ public class PageFragmentVid extends Fragment {
             view = inflater.inflate(R.layout.fragment_eventvideos, container, false);
             //String videoUrl = "http://www.semjerome.com/Video_files/Family guy - archie take.3gp";
             //Uri uri = Uri.parse(videoUrl);
-
+            String vidname = myData[4];
             VideoView mVideoView  = (VideoView) view.findViewById(R.id.videoView);
             MediaController mediaController = new MediaController(getActivity());
             mediaController.setAnchorView(mVideoView);
             mVideoView.setMediaController(mediaController);
             String myPackage= "galaxynoise.autaccreport";
-            Uri uri = Uri.parse("android.resource://" +myPackage+ "/" +R.raw.testvideo);
+            Uri uri = Uri.parse("http://semjerome.com/Android/"+vidname+".html");
             try{
                mVideoView.setVideoURI(uri);
             }catch(Exception e){
