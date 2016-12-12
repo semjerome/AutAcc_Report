@@ -73,6 +73,10 @@ public class PageFragmentVid extends Fragment {
     String [] myData;
     private int mPage;
 
+    //Boolean for checking database
+    public static boolean isDriverEmpty;
+    public static boolean isCarEmpty;
+
     String PLATENUMBER= null;
     String CARMAKE= null;
     String CARMODEL= null;
@@ -334,7 +338,16 @@ public class PageFragmentVid extends Fragment {
             int tmp;
 
             try {
-                URL url=new URL("http://semjerome.com/app/addCar.php");
+                URL url;
+
+                if(isCarEmpty==true) {
+                    url = new URL("http://semjerome.com/app/addCar.php");
+                    isCarEmpty=false;
+                }
+                else
+                {
+                    url = new URL("http://semjerome.com/app/updateCar.php");
+                }
 
                 String urlParams = "platenumber="+platenumber+"&carmake="+carmake+"&carmodel="
                         +carmodel+"&caryear="+caryear+"&reportid="+reportid;
@@ -511,7 +524,13 @@ public class PageFragmentVid extends Fragment {
                 etBrand.setText(carinfo.get(0).get("carmake").toString());
                 etModel.setText(carinfo.get(0).get("carmodel").toString());
                 etYear.setText(carinfo.get(0).get("caryear").toString());
+                isCarEmpty=false;
             }
+            else
+            {
+                isCarEmpty=true;
+            }
+
         }
         }
 
@@ -541,9 +560,16 @@ public class PageFragmentVid extends Fragment {
             String reportid = params[5];
             String data = "";
             int tmp;
-
+            URL url;
             try {
-                URL url = new URL("http://semjerome.com/app/addDriver.php");
+                if(isDriverEmpty==true) {
+                     url = new URL("http://semjerome.com/app/addDriver.php");
+                    isDriverEmpty=false;
+                }
+                else
+                {
+                     url = new URL("http://semjerome.com/app/updateDriver.php");
+                }
                 String urlParams = "driverlicense=" + driverlicense + "&fname=" + fname + "&lname="
                         + lname + "&gender=" + gender + "&insuranceNumber=" + insurancenumber + "&reportid=" + reportid;
 
@@ -718,6 +744,11 @@ public class PageFragmentVid extends Fragment {
                     etLname.setText(driverinfo.get(0).get("lname").toString());
                     etGender.setText(driverinfo.get(0).get("gender").toString());
                     etInsurance.setText(driverinfo.get(0).get("insuranceNumber").toString());
+                    isDriverEmpty=false;
+                }
+                else
+                {
+                    isDriverEmpty=true;
                 }
             }
         }
