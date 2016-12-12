@@ -132,9 +132,9 @@
         <EditText
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:inputType="textPersonName"
+                android:inputType="number"
                 android:textColorLink="@color/colorEditText"
-
+                android:maxLength="4"
                 android:ems="10"
                 android:id="@+id/etYear" />
 
