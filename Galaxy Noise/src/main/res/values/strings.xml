@@ -39,6 +39,14 @@
     <string name="add">Add</string>
     <string name="update">Update</string>
     <string name="save">Save</string>
+    <string name="call">Call</string>
+
+    <string name="rbc">RBC Insurance</string>
+    <string name="td">TD Insurance</string>
+    <string name="about">About</string>
+    <string name="caa">CAA Insurance</string>
+    <string name="des">Desjardins</string>
+    <string name="statefarm">State Farm</string>
 
     <string name="reverseGeo">Location</string>
     <string name="displayInfo">Information Display</string>

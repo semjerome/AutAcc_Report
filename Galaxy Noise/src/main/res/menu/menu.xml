@@ -3,22 +3,22 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
     <item android:id="@+id/about"
         app:showAsAction="always"
-        android:title="About" />
+        android:title="@string/about" />
     <item android:id="@+id/TD"
         app:showAsAction="never"
-        android:title="TD Insurance" />
+        android:title="@string/td" />
     <item android:id="@+id/RBC"
         app:showAsAction="never"
-        android:title="RBC Insurance" />
+        android:title="@string/rbc" />
     <item android:id="@+id/Desj"
         app:showAsAction="never"
-        android:title="Desjardins" />
+        android:title="@string/des" />
     <item android:id="@+id/CAA"
         app:showAsAction="never"
-        android:title="CAA Insurance" />
+        android:title="@string/caa" />
     <item android:id="@+id/Farm"
         app:showAsAction="never"
-        android:title="State Farm" />
+        android:title="@string/statefarm" />
 
 
 </menu>
