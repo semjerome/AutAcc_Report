@@ -87,7 +87,7 @@ public class ReportList extends AppCompatActivity {
                 String lati = map.get("lati");
                 String videoName = map.get("videoName");
                 //String name= map.get(TAG_NAME);
-                Toast.makeText(ReportList.this, reportid, Toast.LENGTH_SHORT).show();
+                Toast.makeText(ReportList.this, "ReportId:"+ reportid+"is selected.", Toast.LENGTH_SHORT).show();
                 Intent i = new Intent(ReportList.this, VidActivity.class);
                 i.putExtra("reportid", reportid);
                 i.putExtra("incidentdate", idate);

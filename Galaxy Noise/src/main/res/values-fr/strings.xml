@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">AutAcc rapport</string>
+    <string name="app_name">AutAcc Rapport</string>
     <string name="title_activity_report_list">Liste des rapports</string>
     <string name="title_activity_report_content">ReportContent</string>
 

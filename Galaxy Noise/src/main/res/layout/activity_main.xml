@@ -12,11 +12,18 @@
     <LinearLayout
         android:orientation="vertical"
         android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:id="@+id/layFiller"
+        android:layout_above="@+id/layout_login">
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/layout_login"
-        android:weightSum="1"
-
-        android:layout_marginBottom="80dp"
+        android:layout_marginBottom="78dp"
         android:layout_alignParentBottom="true"
         android:layout_alignParentStart="true">
 
@@ -94,10 +101,8 @@
             android:layout_width="110dp"
             android:layout_height="wrap_content"
             android:layout_gravity="right"
-            android:layout_marginBottom="100dp"
             android:layout_alignParentBottom="true"
             android:layout_alignParentEnd="true"
-            android:layout_marginTop="52dp"
             android:id="@+id/btnLogin"
             android:background="@drawable/buttonshape"
 
