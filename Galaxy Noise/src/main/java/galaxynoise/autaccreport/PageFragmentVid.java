@@ -116,11 +116,6 @@ public class PageFragmentVid extends Fragment {
 
     }
 
-    public void setCar()
-    {
-
-    }
-
     GoogleMap googleMap;
     MapView mMapView;
     MarkerOptions markerOptions;
@@ -157,8 +152,6 @@ public class PageFragmentVid extends Fragment {
 
             GetCar b = new GetCar();
             b.execute(reportid);
-
-
         }
 
         else if(mPage==2)//Driver
@@ -272,6 +265,32 @@ public class PageFragmentVid extends Fragment {
         return view;
     }
 
+    public String loadCarJsonLocal()
+    {
+        String json = null;
+        try {
+
+            InputStream is = getContext().getAssets().open("car_makemodel.json");
+
+            int size = is.available();
+
+            byte[] buffer = new byte[size];
+
+            is.read(buffer);
+
+            is.close();
+
+            json = new String(buffer, "UTF-8");
+
+
+        } catch (IOException ex) {
+            ex.printStackTrace();
+            return null;
+        }
+
+        return json;
+
+    }
     private class ReverseGeoCodingTask extends AsyncTask<LatLng, Void, String>{
         Context mContext;
         public ReverseGeoCodingTask(Context context){
@@ -410,6 +429,22 @@ public class PageFragmentVid extends Fragment {
         }
     }
 
+    /**
+     car make and model reference, arthurkao, github repository,
+     https://github.com/arthurkao/vehicle-make-model-data
+     **/
+    class MakeModel extends AsyncTask<String, Void, Void>{
+        @Override
+        protected void onPreExecute(){
+            super.onPreExecute();
+        }
+
+        @Override
+        protected Void doInBackground(String... params){
+
+            return null;
+        }
+    }
     //get Car
     class GetCar extends AsyncTask<String, Void, Void> {
 
@@ -466,7 +501,6 @@ public class PageFragmentVid extends Fragment {
                     JSONObject mainJsonObject = new JSONObject(data);
                     // Log.d("JSON Data : ", mainJsonObject.toString());
 
-
                     JSONArray mainArray = mainJsonObject.getJSONArray("Car");
                     // Log.d("JSON Array : ", mainArray.toString());
 
@@ -484,7 +518,6 @@ public class PageFragmentVid extends Fragment {
                                     .getString("carmodel");
                             String caryear = incidentJsonObject
                                     .getString("caryear");
-
 
                             HashMap<String, String> info = new HashMap<>();
                             info.put("platenumber", platenumber);
