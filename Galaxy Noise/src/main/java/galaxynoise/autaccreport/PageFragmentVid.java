@@ -1,5 +1,4 @@
 package galaxynoise.autaccreport;
-
 /** //Team name Galaxy Noise
  * Created by Zaido on 2016-11-13.
  */
@@ -20,6 +19,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListAdapter;
@@ -59,6 +59,10 @@ import java.util.List;
 
 public class PageFragmentVid extends Fragment {
     public static final String ARG_PAGE = "ARG_PAGE";
+    AutoCompleteTextView actMake;
+    AutoCompleteTextView actModel;
+    AutoCompleteTextView actYear;
+
     EditText etPN;
     EditText  etBrand;
     EditText  etModel;
@@ -95,12 +99,11 @@ public class PageFragmentVid extends Fragment {
     Button btnCarAdd;
     Button btnDriverAdd;
 
-
     View view;
     // Identifier for the permission request
     private static final int READ_CONTACTS_PERMISSIONS_REQUEST = 1;
 
-//hello
+    //hello
     public static PageFragmentVid create(int page) {
         Bundle args = new Bundle();
         args.putInt(ARG_PAGE, page);
@@ -133,13 +136,24 @@ public class PageFragmentVid extends Fragment {
         /*
             0 = reportid , 1 = incidentdate, 2 = longi, 3 = lati, 4 = vidname
          */
-        if(mPage==1) //Car
+        if(mPage==1) //Car page
         {
             view = inflater.inflate(R.layout.fragment_car, container, false);
             etPN = (EditText) view.findViewById(R.id.etPN);
             etBrand= (EditText) view.findViewById(R.id.etBrand);
             etModel= (EditText) view.findViewById(R.id.etModel);
             etYear = (EditText) view.findViewById(R.id.etYear);
+
+            actMake = (AutoCompleteTextView) view.findViewById(R.id.actMake);
+            actModel = (AutoCompleteTextView) view.findViewById(R.id.actModel);
+            actYear = (AutoCompleteTextView) view.findViewById(R.id.actYear);
+
+            String carJson = loadCarJsonLocal();
+            try {
+                JSONObject json = new JSONObject(carJson);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
 
             btnCarAdd = (Button)view.findViewById(R.id.btnCarAdd);
 
@@ -180,7 +194,6 @@ public class PageFragmentVid extends Fragment {
             /*
             0 = reportid , 1 = incidentdate, 2 = longi, 3 = lati, 4 = vidname
          */
-
             view = inflater.inflate(R.layout.fragment_eventlocation, container, false);
             tvReverseGeo = (TextView)view.findViewById(R.id.tvReverseGeo);
 
@@ -271,17 +284,11 @@ public class PageFragmentVid extends Fragment {
         try {
 
             InputStream is = getContext().getAssets().open("car_makemodel.json");
-
             int size = is.available();
-
             byte[] buffer = new byte[size];
-
             is.read(buffer);
-
             is.close();
-
             json = new String(buffer, "UTF-8");
-
 
         } catch (IOException ex) {
             ex.printStackTrace();
