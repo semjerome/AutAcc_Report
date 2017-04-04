@@ -75,7 +75,6 @@
             android:layout_below="@+id/tvPW" />
 
         <AutoCompleteTextView
-            android:text="AutoCompleteTextView"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:id="@+id/actMake" />
@@ -110,7 +109,6 @@
             android:layout_alignParentStart="true" />
 
         <AutoCompleteTextView
-            android:text="AutoCompleteTextView"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:id="@+id/actModel" />
@@ -142,7 +140,6 @@
             android:layout_alignParentStart="true" />
 
         <AutoCompleteTextView
-            android:text="AutoCompleteTextView"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:id="@+id/actYear" />
