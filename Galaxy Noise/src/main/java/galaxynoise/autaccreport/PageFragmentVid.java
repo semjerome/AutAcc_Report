@@ -19,6 +19,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.EditText;
@@ -54,6 +55,7 @@ import java.net.MalformedURLException;
 import java.net.ProtocolException;
 import java.net.URL;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 
@@ -63,30 +65,37 @@ public class PageFragmentVid extends Fragment {
     AutoCompleteTextView actModel;
     AutoCompleteTextView actYear;
 
+    String[] makes;
+    String[] models;
+    ArrayAdapter<String> makeAdapter;
+    ArrayAdapter<String> modelAdapter;
+    ArrayList<HashMap<String, String>> makeInfo = new ArrayList<>();
+    ArrayList<HashMap<String, String>> modelInfo = new ArrayList<>();
+
     EditText etPN;
-    EditText  etBrand;
-    EditText  etModel;
+    EditText etBrand;
+    EditText etModel;
     EditText etYear;
 
     EditText etFname;
-    EditText  etLname;
-    EditText  etLicense;
+    EditText etLname;
+    EditText etLicense;
     EditText etGender;
     EditText etInsurance;
 
-    String [] myData;
+    String[] myData;
     private int mPage;
 
     //Boolean for checking database
     public static boolean isDriverEmpty;
     public static boolean isCarEmpty;
 
-    String PLATENUMBER= null;
-    String CARMAKE= null;
-    String CARMODEL= null;
+    String PLATENUMBER = null;
+    String CARMAKE = null;
+    String CARMODEL = null;
     String CARYEAR = null;
 
-    String DRIVERLICENSE = null, FNAME=null,LNAME = null, GENDER = null, INSURANCENUMBER = null;
+    String DRIVERLICENSE = null, FNAME = null, LNAME = null, GENDER = null, INSURANCENUMBER = null;
     String reportid;
     //JSON
     private ProgressDialog pDialog;
@@ -132,30 +141,35 @@ public class PageFragmentVid extends Fragment {
 
         VidActivity activity = (VidActivity) getActivity();
         myData = activity.getFromReport();
-        reportid =myData[0];
+        reportid = myData[0];
         /*
             0 = reportid , 1 = incidentdate, 2 = longi, 3 = lati, 4 = vidname
          */
-        if(mPage==1) //Car page
+        if (mPage == 1) //Car page
         {
             view = inflater.inflate(R.layout.fragment_car, container, false);
             etPN = (EditText) view.findViewById(R.id.etPN);
-            etBrand= (EditText) view.findViewById(R.id.etBrand);
-            etModel= (EditText) view.findViewById(R.id.etModel);
+            etBrand = (EditText) view.findViewById(R.id.etBrand);
+            etModel = (EditText) view.findViewById(R.id.etModel);
             etYear = (EditText) view.findViewById(R.id.etYear);
 
             actMake = (AutoCompleteTextView) view.findViewById(R.id.actMake);
             actModel = (AutoCompleteTextView) view.findViewById(R.id.actModel);
             actYear = (AutoCompleteTextView) view.findViewById(R.id.actYear);
 
-            String carJson = loadCarJsonLocal();
-            try {
-                JSONObject json = new JSONObject(carJson);
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
+            parseJson();
+            makes = makeInfo.toArray(new String[makeInfo.size()]);
+            models = modelInfo.toArray(new String[modelInfo.size()]);
+            makeAdapter= new ArrayAdapter<>(getActivity(),android.R.layout.simple_dropdown_item_1line, makes);
+            modelAdapter= new ArrayAdapter<>(getActivity(),android.R.layout.simple_dropdown_item_1line, models);
 
-            btnCarAdd = (Button)view.findViewById(R.id.btnCarAdd);
+            actMake.setAdapter(makeAdapter);
+            actModel.setAdapter(modelAdapter);
+
+            Log.d("This is make array: ", "arr: " + Arrays.toString(makes));
+            Log.d("This is model array: ", "arr: " + Arrays.toString(models));
+
+            btnCarAdd = (Button) view.findViewById(R.id.btnCarAdd);
 
             btnCarAdd.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -166,18 +180,16 @@ public class PageFragmentVid extends Fragment {
 
             GetCar b = new GetCar();
             b.execute(reportid);
-        }
-
-        else if(mPage==2)//Driver
+        } else if (mPage == 2)//Driver
         {
-            view= inflater.inflate(R.layout.fragment_driver,container, false);
+            view = inflater.inflate(R.layout.fragment_driver, container, false);
             String reportid = myData[0];
-            etLicense= (EditText) view.findViewById(R.id.etLicense);
+            etLicense = (EditText) view.findViewById(R.id.etLicense);
             etFname = (EditText) view.findViewById(R.id.etFname);
-            etLname= (EditText) view.findViewById(R.id.etLname);
+            etLname = (EditText) view.findViewById(R.id.etLname);
             etGender = (EditText) view.findViewById(R.id.etGender);
             etInsurance = (EditText) view.findViewById(R.id.etInsurance);
-            btnDriverAdd =(Button)view.findViewById(R.id.btnDriverAdd);
+            btnDriverAdd = (Button) view.findViewById(R.id.btnDriverAdd);
 
             btnDriverAdd.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -188,23 +200,21 @@ public class PageFragmentVid extends Fragment {
 
             GetDriver g = new GetDriver();
             g.execute(reportid);
-        }
-        else if(mPage==3)
-        { //location
+        } else if (mPage == 3) { //location
             /*
             0 = reportid , 1 = incidentdate, 2 = longi, 3 = lati, 4 = vidname
          */
             view = inflater.inflate(R.layout.fragment_eventlocation, container, false);
-            tvReverseGeo = (TextView)view.findViewById(R.id.tvReverseGeo);
+            tvReverseGeo = (TextView) view.findViewById(R.id.tvReverseGeo);
 
             mMapView = (MapView) view.findViewById(R.id.mapView);
             mMapView.onCreate(savedInstanceState);
 
             mMapView.onResume();
 
-            try{
+            try {
                 MapsInitializer.initialize(getActivity().getApplicationContext());
-            }catch(Exception e){
+            } catch (Exception e) {
                 e.printStackTrace();
             }
 
@@ -212,18 +222,18 @@ public class PageFragmentVid extends Fragment {
                 @Override
                 public void onMapReady(GoogleMap mMap) {
                     googleMap = mMap;
-                    if(checkPermission())
-                    googleMap.setMyLocationEnabled(true);
+                    if (checkPermission())
+                        googleMap.setMyLocationEnabled(true);
 
                     double longi = Double.parseDouble(myData[2]);
                     double lati = Double.parseDouble(myData[3]);
                     //toronto
                     //double lati = 43.579028;
                     //double longi = -79.746524;
-                    LatLng event = new LatLng(lati,longi);
+                    LatLng event = new LatLng(lati, longi);
                     markerOptions = new MarkerOptions();
 
-                    Log.d("tv: ","not set");
+                    Log.d("tv: ", "not set");
                     new ReverseGeoCodingTask(getContext()).execute(event);
                     //Log.d("tv: ",addressText);
                     String snippetAddress = tvReverseGeo.getText().toString();
@@ -235,30 +245,27 @@ public class PageFragmentVid extends Fragment {
                     googleMap.animateCamera(CameraUpdateFactory.newCameraPosition(cameraPosition));
                 }
 
-                private boolean checkPermission()
-                {
+                private boolean checkPermission() {
                     return (ContextCompat.checkSelfPermission(getActivity(), Manifest.permission.ACCESS_COARSE_LOCATION)
-                                == PackageManager.PERMISSION_GRANTED);
+                            == PackageManager.PERMISSION_GRANTED);
                 }
 
             });
-        }
-        else if (mPage == 4)
-        { //video
+        } else if (mPage == 4) { //video
             view = inflater.inflate(R.layout.fragment_eventvideos, container, false);
             //String videoUrl = "http://www.semjerome.com/Video_files/Family guy - archie take.3gp";
             //Uri uri = Uri.parse(videoUrl);
             String vidname = myData[4];
-            VideoView mVideoView  = (VideoView) view.findViewById(R.id.videoView);
+            VideoView mVideoView = (VideoView) view.findViewById(R.id.videoView);
             MediaController mediaController = new MediaController(getActivity());
             mediaController.setAnchorView(mVideoView);
             mVideoView.setMediaController(mediaController);
-            String myPackage= "galaxynoise.autaccreport";
-            Uri uri = Uri.parse("http://www.semjerome.com/Android/"+vidname+".mp4");
-            try{
-               mVideoView.setVideoURI(uri);
+            String myPackage = "galaxynoise.autaccreport";
+            Uri uri = Uri.parse("http://www.semjerome.com/Android/" + vidname + ".mp4");
+            try {
+                mVideoView.setVideoURI(uri);
                 mVideoView.start();
-            }catch(Exception e){
+            } catch (Exception e) {
                 Log.e("Error", e.getMessage());
                 e.printStackTrace();
             }
@@ -266,10 +273,7 @@ public class PageFragmentVid extends Fragment {
             //mVideoView.setVideoPath(mUrl);
             //videoMediaController.setMediaPlayer(mVideoView);
             //mVideoView.setMediaController(videoMediaController);
-        }
-
-        else
-        {
+        } else {
             view = inflater.inflate(R.layout.fragment_pager, container, false);
             TextView textView = (TextView) view;
             textView.setText("Fragment #" + mPage);
@@ -278,11 +282,40 @@ public class PageFragmentVid extends Fragment {
         return view;
     }
 
+    public void parseJson()
+    {
+        try {
+            JSONObject json = new JSONObject(loadCarJsonLocal());
+            JSONArray m_jArry = json.getJSONArray("make");
+            HashMap<String, String> make_li;
+            HashMap<String, String> model_li;
+            for (int i = 0; i < m_jArry.length(); i++) {
+                JSONObject jo_inside = m_jArry.getJSONObject(i);
+                Log.d("Details-->", jo_inside.getString("make"));
+                String make_value = jo_inside.getString("make");
+                String model_value = jo_inside.getString("model");
+
+                //Add your values in your `ArrayList` as below:
+                make_li = new HashMap<String, String>();
+                model_li = new HashMap<String, String>();
+                make_li.put("make", make_value);
+                model_li.put("model", model_value);
+
+                Log.d("loading make ", make_value);
+                Log.d("loading model ", model_value);
+                makeInfo.add(make_li);
+                modelInfo.add(model_li);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+    }
+
     public String loadCarJsonLocal()
     {
         String json = null;
         try {
-
             InputStream is = getContext().getAssets().open("car_makemodel.json");
             int size = is.available();
             byte[] buffer = new byte[size];
@@ -294,9 +327,7 @@ public class PageFragmentVid extends Fragment {
             ex.printStackTrace();
             return null;
         }
-
         return json;
-
     }
     private class ReverseGeoCodingTask extends AsyncTask<LatLng, Void, String>{
         Context mContext;
@@ -339,6 +370,10 @@ public class PageFragmentVid extends Fragment {
         }
     }
 
+    /**
+     car make and model reference, arthurkao, github repository,
+     https://github.com/arthurkao/vehicle-make-model-data
+     **/
     void executeAddCar()
     {
         PLATENUMBER = etPN.getText().toString();
@@ -408,19 +443,15 @@ public class PageFragmentVid extends Fragment {
             try {
                 JSONObject root = new JSONObject(s);
                 //JSONObject user_data = root.getJSONObject("User");
-
                 JSONObject car= root.getJSONObject("Car");
-
                 car.put("platenumber", PLATENUMBER);
                 car.put("carmake",CARMAKE);
                 car.put("carmodel",CARMODEL);
                 car.put("caryear",CARYEAR);
                 car.put("reportid",reportid);
-
                 Log.d("Storing to JSON plate: ", PLATENUMBER);
                 Log.d("Storing to JSON make: ", CARMAKE);
                 Log.d("Storing to JSON model: ", CARMODEL);
-
 
             } catch (JSONException e) {
                 e.printStackTrace();
@@ -436,22 +467,6 @@ public class PageFragmentVid extends Fragment {
         }
     }
 
-    /**
-     car make and model reference, arthurkao, github repository,
-     https://github.com/arthurkao/vehicle-make-model-data
-     **/
-    class MakeModel extends AsyncTask<String, Void, Void>{
-        @Override
-        protected void onPreExecute(){
-            super.onPreExecute();
-        }
-
-        @Override
-        protected Void doInBackground(String... params){
-
-            return null;
-        }
-    }
     //get Car
     class GetCar extends AsyncTask<String, Void, Void> {
 
@@ -471,7 +486,6 @@ public class PageFragmentVid extends Fragment {
             // Making a request to url and getting response
             //String uri = "http://semjerome.com/app/incident.php";
             //String jsonStr = sh.makeServiceCall(uri);
-
 
             try {
                 URL url = new URL("http://semjerome.com/app/getCar.php");
@@ -790,8 +804,6 @@ public class PageFragmentVid extends Fragment {
                 }
             }
         }
-
-
 
     // Called when the user is performing an action which requires the app to read the
         // user's contacts

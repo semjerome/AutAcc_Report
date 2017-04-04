@@ -1,10 +1,4 @@
 package galaxynoise.autaccreport;
-
-/**
- * planning on making it sliding tabs
- * With the incident list on first tab and then something lewse on secodn tab
- */
-
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.database.Cursor;
@@ -24,11 +18,9 @@ import android.widget.ListView;
 import android.widget.SimpleAdapter;
 import android.widget.TextView;
 import android.widget.Toast;
-
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
-
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
@@ -37,12 +29,10 @@ import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.HashMap;
-
 import static android.R.attr.data;
 import static android.R.id.list;
 
 public class ReportList extends AppCompatActivity {
-
 
     ListView listIncident;
     public static boolean isListempty =true;
@@ -120,8 +110,6 @@ public class ReportList extends AppCompatActivity {
             // Making a request to url and getting response
             //String uri = "http://semjerome.com/app/incident.php";
             //String jsonStr = sh.makeServiceCall(uri);
-
-
             try {
                 URL url = new URL("http://semjerome.com/app/incident.php");
                 String urlParams = "uid="+uid;
@@ -137,7 +125,6 @@ public class ReportList extends AppCompatActivity {
                 while((tmp=is.read())!=-1){
                     data+= (char)tmp;
                 }
-
                 is.close();
                 httpURLConnection.disconnect();
 
@@ -207,7 +194,6 @@ public class ReportList extends AppCompatActivity {
         protected void onPostExecute (Void result){
             super.onPostExecute(result);
             // Dismiss the progress dialog
-
             /**
              * Updating parsed JSON data into ListView
              **/
@@ -222,9 +208,7 @@ public class ReportList extends AppCompatActivity {
             {
                 tvnews.setText(R.string.news);
             }
-
         }
-
     }
     @Override
     public void onBackPressed() {
@@ -239,7 +223,6 @@ public class ReportList extends AppCompatActivity {
                     }
                 }).create().show();
     }
-
-    }
+}
 
 

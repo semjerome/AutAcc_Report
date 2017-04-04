@@ -83,8 +83,6 @@ public class VidActivity extends AppCompatActivity implements View.OnClickListen
         return fromReport;
     }
 
-
-
     public class SampleFragmentPagerAdapter extends FragmentPagerAdapter {
         final int PAGE_COUNT = 4;
         private Context context;
@@ -121,6 +119,7 @@ public class VidActivity extends AppCompatActivity implements View.OnClickListen
             }
             return "";
         }
+
         @Override
         public Fragment getItem(int position) {
 
