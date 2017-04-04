@@ -1,0 +1,19 @@
+<resources>
+    <string name="app_name">AutoAcc_ReportFinal</string>
+
+    <string name="e_videos">Video</string>
+    <string name="vid1">Vid1</string>
+    <string name="vid2">Vid2</string>
+    <string name="vid3">Vid3</string>
+
+    <string name="gps_information">Location</string>
+    <string name="save">Save</string>
+
+    <string name="add_info">Information</string>
+    <string name="hints_details">Driver\'s Information&#8230; \nInsurance Number&#8230;</string>
+    <string name="title_activity_location">Map</string>
+
+    <string name="showLocation">Show Location</string>
+    <string name="title_activity_blank">BlankActivity</string>
+
+</resources>
