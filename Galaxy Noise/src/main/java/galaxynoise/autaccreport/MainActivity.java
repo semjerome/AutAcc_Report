@@ -11,11 +11,9 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
-
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
-
 import java.io.BufferedInputStream;
 import java.io.BufferedReader;
 import java.io.File;
@@ -30,7 +28,6 @@ import java.net.MalformedURLException;
 import java.net.ProtocolException;
 import java.net.URL;
 import java.util.HashMap;
-//
 
 public class MainActivity extends AppCompatActivity {
 
@@ -46,7 +43,6 @@ public class MainActivity extends AppCompatActivity {
         username = (EditText) findViewById(R.id.etUserName);
         password = (EditText) findViewById(R.id.etPW);
         Button b1 = (Button) findViewById(R.id.btnLogin);
-
         b1.setOnClickListener(new View.OnClickListener() {
             @Override
         public void onClick (View v)
@@ -54,7 +50,6 @@ public class MainActivity extends AppCompatActivity {
             main_login();
         }
     });
-
     }
 
     public void main_register(View v){
@@ -115,7 +110,6 @@ public class MainActivity extends AppCompatActivity {
             try {
                 JSONObject root = new JSONObject(s);
                 //JSONObject user_data = root.getJSONObject("User");
-
                 JSONArray mainArray = root.getJSONArray("User");
 
                 // looping through All Contacts
