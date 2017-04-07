@@ -27,7 +27,12 @@ import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.ProtocolException;
 import java.net.URL;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.HashSet;
+import java.util.Set;
+
+import static java.security.AccessController.getContext;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -43,6 +48,9 @@ public class MainActivity extends AppCompatActivity {
         username = (EditText) findViewById(R.id.etUserName);
         password = (EditText) findViewById(R.id.etPW);
         Button b1 = (Button) findViewById(R.id.btnLogin);
+
+
+
         b1.setOnClickListener(new View.OnClickListener() {
             @Override
         public void onClick (View v)
@@ -111,7 +119,6 @@ public class MainActivity extends AppCompatActivity {
                 JSONObject root = new JSONObject(s);
                 //JSONObject user_data = root.getJSONObject("User");
                 JSONArray mainArray = root.getJSONArray("User");
-
                 // looping through All Contacts
                 for (int i = 0; i < mainArray.length(); i++) {
                     JSONObject insideJsonObject = mainArray.getJSONObject(i);

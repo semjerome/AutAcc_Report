@@ -3,6 +3,7 @@ package galaxynoise.autaccreport;
  * Created by Zaido on 2016-11-13.
  */
 import android.Manifest;
+import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
@@ -19,6 +20,8 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.WindowManager;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 import android.widget.Button;
@@ -56,26 +59,28 @@ import java.net.ProtocolException;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.HashMap;
+import java.util.HashSet;
+import java.util.LinkedHashSet;
 import java.util.List;
+import java.util.Set;
 
 public class PageFragmentVid extends Fragment {
     public static final String ARG_PAGE = "ARG_PAGE";
     AutoCompleteTextView actMake;
     AutoCompleteTextView actModel;
     AutoCompleteTextView actYear;
+    EditText etPN;
 
-    String[] makes;
-    String[] models;
     ArrayAdapter<String> makeAdapter;
     ArrayAdapter<String> modelAdapter;
-    ArrayList<HashMap<String, String>> makeInfo = new ArrayList<>();
-    ArrayList<HashMap<String, String>> modelInfo = new ArrayList<>();
+    ArrayAdapter<String> yearAdapter;
+    String[] makes;
+    String[] models;
+    int baseYear = 1980;
+    String [] years= new String[38];;
 
-    EditText etPN;
-    EditText etBrand;
-    EditText etModel;
-    EditText etYear;
 
     EditText etFname;
     EditText etLname;
@@ -141,6 +146,14 @@ public class PageFragmentVid extends Fragment {
         VidActivity activity = (VidActivity) getActivity();
         myData = activity.getFromReport();
         reportid = myData[0];
+        makes = activity.getMakes();
+        models = activity.getModels();
+        years[0] = Integer.toString(baseYear);
+        for(int i = 1; i <38;i++)
+        {
+            baseYear++;
+            years[i]= Integer.toString(baseYear);
+        }
         /*
             0 = reportid , 1 = incidentdate, 2 = longi, 3 = lati, 4 = vidname
          */
@@ -148,36 +161,18 @@ public class PageFragmentVid extends Fragment {
         {
             view = inflater.inflate(R.layout.fragment_car, container, false);
             etPN = (EditText) view.findViewById(R.id.etPN);
-            etBrand = (EditText) view.findViewById(R.id.etBrand);
-            etModel = (EditText) view.findViewById(R.id.etModel);
-            etYear = (EditText) view.findViewById(R.id.etYear);
 
             actMake = (AutoCompleteTextView) view.findViewById(R.id.actMake);
             actModel = (AutoCompleteTextView) view.findViewById(R.id.actModel);
             actYear = (AutoCompleteTextView) view.findViewById(R.id.actYear);
 
-            //makes = makeInfo.toArray(new String[makeInfo.size()]);
-            //models = modelInfo.toArray(new String[modelInfo.size()]);
-            parseJson();
-
-            makes = new String[makeInfo.size()];
-            //makeInfo.toArray(makes);
-
-            models = new String[modelInfo.size()];
-            //modelInfo.toArray(models);
-
-            for (int i = 0; i< makeInfo.size(); i++)
-            {
-                makes[i] = makeInfo.get(i).get("make").toString();
-            }
             makeAdapter= new ArrayAdapter<>(getActivity(),android.R.layout.simple_dropdown_item_1line, makes);
             modelAdapter= new ArrayAdapter<>(getActivity(),android.R.layout.simple_dropdown_item_1line, models);
+            yearAdapter= new ArrayAdapter<>(getActivity(),android.R.layout.simple_dropdown_item_1line, years);
 
             actMake.setAdapter(makeAdapter);
             actModel.setAdapter(modelAdapter);
-
-            Log.d("This is make array: ", "arr: " + Arrays.toString(makes));
-            Log.d("This is model array: ", "arr: " + Arrays.toString(models));
+            actYear.setAdapter(yearAdapter);
 
             btnCarAdd = (Button) view.findViewById(R.id.btnCarAdd);
             btnCarAdd.setOnClickListener(new View.OnClickListener() {
@@ -214,6 +209,7 @@ public class PageFragmentVid extends Fragment {
             0 = reportid , 1 = incidentdate, 2 = longi, 3 = lati, 4 = vidname
          */
             view = inflater.inflate(R.layout.fragment_eventlocation, container, false);
+            hideKeyboard(getContext());
             tvReverseGeo = (TextView) view.findViewById(R.id.tvReverseGeo);
 
             mMapView = (MapView) view.findViewById(R.id.mapView);
@@ -262,8 +258,7 @@ public class PageFragmentVid extends Fragment {
             });
         } else if (mPage == 4) { //video
             view = inflater.inflate(R.layout.fragment_eventvideos, container, false);
-            //String videoUrl = "http://www.semjerome.com/Video_files/Family guy - archie take.3gp";
-            //Uri uri = Uri.parse(videoUrl);
+            hideKeyboard(getContext());
             String vidname = myData[4];
             VideoView mVideoView = (VideoView) view.findViewById(R.id.videoView);
             MediaController mediaController = new MediaController(getActivity());
@@ -290,53 +285,19 @@ public class PageFragmentVid extends Fragment {
 
         return view;
     }
+    //hide keyboard when switching to map and video fragment
+    public static void hideKeyboard(Context ctx) {
+        InputMethodManager inputManager = (InputMethodManager) ctx
+                .getSystemService(Context.INPUT_METHOD_SERVICE);
 
-    public void parseJson()
-    {
-        try {
-            JSONObject json = new JSONObject(loadCarJsonLocal());
-            JSONArray m_jArry = json.getJSONArray("carmakes");
-            HashMap<String, String> make_li;
-            HashMap<String, String> model_li;
-            for (int i = 0; i < m_jArry.length(); i++) {
-                JSONObject jo_inside = m_jArry.getJSONObject(i);
-                String make_value = jo_inside.getString("make");
-                String model_value = jo_inside.getString("model");
+        // check if no view has focus:
+        View v = ((Activity) ctx).getCurrentFocus();
+        if (v == null)
+            return;
 
-                //Add your values in your `ArrayList` as below:
-                make_li = new HashMap<String, String>();
-                model_li = new HashMap<String, String>();
-                make_li.put("make", make_value);
-                model_li.put("model", model_value);
-
-                Log.d("loading make ", make_value);
-                Log.d("loading model ", model_value);
-                makeInfo.add(make_li);
-                modelInfo.add(model_li);
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-
+        inputManager.hideSoftInputFromWindow(v.getWindowToken(), 0);
     }
 
-    public String loadCarJsonLocal()
-    {
-        String json = null;
-        try {
-            InputStream is = getContext().getAssets().open("car_makemodel.json");
-            int size = is.available();
-            byte[] buffer = new byte[size];
-            is.read(buffer);
-            is.close();
-            json = new String(buffer, "UTF-8");
-
-        } catch (IOException ex) {
-            ex.printStackTrace();
-            return null;
-        }
-        return json;
-    }
     private class ReverseGeoCodingTask extends AsyncTask<LatLng, Void, String>{
         Context mContext;
         public ReverseGeoCodingTask(Context context){
@@ -385,9 +346,9 @@ public class PageFragmentVid extends Fragment {
     void executeAddCar()
     {
         PLATENUMBER = etPN.getText().toString();
-        CARMAKE = etBrand.getText().toString();
-        CARMODEL = etBrand.getText().toString();
-        CARYEAR = etYear.getText().toString();
+        CARMAKE = actMake.getText().toString();
+        CARMODEL = actModel.getText().toString();
+        CARYEAR = actYear.getText().toString();
         AddCar a = new AddCar();
         a.execute(PLATENUMBER, CARMAKE, CARMODEL, CARYEAR,reportid);
     }
@@ -581,9 +542,9 @@ public class PageFragmentVid extends Fragment {
              **/
             if (carinfo.size() > 0) {
                 etPN.setText(carinfo.get(0).get("platenumber").toString());
-                etBrand.setText(carinfo.get(0).get("carmake").toString());
-                etModel.setText(carinfo.get(0).get("carmodel").toString());
-                etYear.setText(carinfo.get(0).get("caryear").toString());
+                actMake.setText(carinfo.get(0).get("carmake").toString());
+                actModel.setText(carinfo.get(0).get("carmodel").toString());
+                actYear.setText(carinfo.get(0).get("caryear").toString());
                 isCarEmpty=false;
             }
             else

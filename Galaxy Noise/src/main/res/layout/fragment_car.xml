@@ -79,14 +79,6 @@
             android:layout_height="wrap_content"
             android:id="@+id/actMake" />
 
-        <EditText
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:inputType="textPersonName"
-            android:textColorLink="@color/colorEditText"
-            android:ems="10"
-            android:id="@+id/etBrand" />
-
 
     </LinearLayout>
 
@@ -113,14 +105,6 @@
             android:layout_height="wrap_content"
             android:id="@+id/actModel" />
 
-        <EditText
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:inputType="textPersonName"
-                android:textColorLink="@color/colorEditText"
-                android:ems="10"
-                android:id="@+id/etModel" />
-
     </LinearLayout>
 
     <LinearLayout
@@ -143,15 +127,6 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:id="@+id/actYear" />
-
-        <EditText
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:inputType="number"
-                android:textColorLink="@color/colorEditText"
-                android:maxLength="4"
-                android:ems="10"
-                android:id="@+id/etYear" />
 
     </LinearLayout>
 

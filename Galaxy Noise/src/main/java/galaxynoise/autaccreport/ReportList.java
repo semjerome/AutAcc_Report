@@ -29,6 +29,9 @@ import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.HashSet;
+import java.util.Set;
+
 import static android.R.attr.data;
 import static android.R.id.list;
 
@@ -77,7 +80,7 @@ public class ReportList extends AppCompatActivity {
                 String lati = map.get("lati");
                 String videoName = map.get("videoName");
                 //String name= map.get(TAG_NAME);
-                Toast.makeText(ReportList.this, "ReportId:"+ reportid+"is selected.", Toast.LENGTH_SHORT).show();
+                Toast.makeText(ReportList.this, "ReportId: "+ reportid+" is selected.", Toast.LENGTH_SHORT).show();
                 Intent i = new Intent(ReportList.this, VidActivity.class);
                 i.putExtra("reportid", reportid);
                 i.putExtra("incidentdate", idate);

@@ -14,9 +14,20 @@ import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+
+import org.json.JSONArray;
+import org.json.JSONObject;
+
+import java.io.IOException;
+import java.io.InputStream;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.Set;
 
 
 public class VidActivity extends AppCompatActivity implements View.OnClickListener {
@@ -32,6 +43,10 @@ public class VidActivity extends AppCompatActivity implements View.OnClickListen
     String longitude;
     String latitude;
     String videoName;
+    String[] makes;
+    String[] models;
+    ArrayList<HashMap<String, String>> makeInfo = new ArrayList<>();
+    ArrayList<HashMap<String, String>> modelInfo = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -43,16 +58,6 @@ public class VidActivity extends AppCompatActivity implements View.OnClickListen
         //get DATA could include car
 
         Intent i =  getIntent();
-        /*String pn = intent.getStringExtra("plate_number");
-        String brand = intent.getStringExtra("brand");
-        String model =intent.getStringExtra("model");
-        String year =intent.getStringExtra("year");
-
-        String fname = intent.getStringExtra("first_name");
-        String  lname =intent.getStringExtra("last_name");
-        String  license = intent.getStringExtra("license");
-        String gender= intent.getStringExtra("gender");
-        String insurance = intent.getStringExtra("insurance");*/
 
         reportid = i.getStringExtra("reportid");
         incidentdate =i.getStringExtra("incidentdate");
@@ -60,8 +65,24 @@ public class VidActivity extends AppCompatActivity implements View.OnClickListen
         latitude= i.getStringExtra("lati");
         videoName =i.getStringExtra("videoName");
 
-        //getDataFromReportList();
+        parseJson();
+        Set<HashMap<String, String>> setMakes= new HashSet<>();
+        setMakes.addAll(makeInfo);
+        makeInfo.clear();
+        makeInfo.addAll(setMakes);
+        makes = new String[makeInfo.size()];
+        models = new String[modelInfo.size()];
 
+        for(int x = 0; x< makeInfo.size(); x++)
+        {
+            makes[x] = makeInfo.get(x).get("make").toString();
+        }
+        for(int x = 0; x< modelInfo.size();x++)
+        {
+            models[x]= modelInfo.get(x).get("model").toString();
+        }
+
+        //getDataFromReportList();
         ViewPager viewPager = (ViewPager) findViewById(R.id.viewpager);
         viewPager.setAdapter(new SampleFragmentPagerAdapter(getSupportFragmentManager(),
                 VidActivity.this));
@@ -75,12 +96,68 @@ public class VidActivity extends AppCompatActivity implements View.OnClickListen
         tabLayout.getTabAt(2).setIcon(drawables[2]);
         tabLayout.getTabAt(3).setIcon(drawables[3]);
 
+
     }
+
+    public void parseJson()
+    {
+        try {
+            JSONObject json = new JSONObject(loadCarJsonLocal());
+            JSONArray m_jArry = json.getJSONArray("carmakes");
+            HashMap<String, String> make_li;
+            HashMap<String, String> model_li;
+            for (int i = 0; i < m_jArry.length(); i++) {
+                JSONObject jo_inside = m_jArry.getJSONObject(i);
+                String make_value = jo_inside.getString("make");
+                String model_value = jo_inside.getString("model");
+
+                //Add your values in your `ArrayList` as below:
+                make_li = new HashMap<String, String>();
+                model_li = new HashMap<String, String>();
+                make_li.put("make", make_value);
+                model_li.put("model", model_value);
+                //Log.d("loading make ", make_value);
+                //Log.d("loading model ", model_value);
+                makeInfo.add(make_li);
+                modelInfo.add(model_li);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    public String loadCarJsonLocal()
+    {
+        String json = null;
+        try {
+            InputStream is = getAssets().open("car_makemodel.json");
+            int size = is.available();
+            byte[] buffer = new byte[size];
+            is.read(buffer);
+            is.close();
+            json = new String(buffer, "UTF-8");
+
+        } catch (IOException ex) {
+            ex.printStackTrace();
+            return null;
+        }
+        return json;
+    }
+
 
     public String [] getFromReport()
     {
         String fromReport [] = {reportid, incidentdate, longitude, latitude, videoName};
         return fromReport;
+    }
+    public String [] getMakes()
+    {
+        return makes;
+    }
+
+    public String [] getModels()
+    {
+        return models;
     }
 
     public class SampleFragmentPagerAdapter extends FragmentPagerAdapter {
