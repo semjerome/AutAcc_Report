@@ -125,7 +125,6 @@ public class PageFragmentVid extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         mPage = getArguments().getInt(ARG_PAGE);
-
     }
 
     GoogleMap googleMap;
@@ -157,9 +156,20 @@ public class PageFragmentVid extends Fragment {
             actModel = (AutoCompleteTextView) view.findViewById(R.id.actModel);
             actYear = (AutoCompleteTextView) view.findViewById(R.id.actYear);
 
+            //makes = makeInfo.toArray(new String[makeInfo.size()]);
+            //models = modelInfo.toArray(new String[modelInfo.size()]);
             parseJson();
-            makes = makeInfo.toArray(new String[makeInfo.size()]);
-            models = modelInfo.toArray(new String[modelInfo.size()]);
+
+            makes = new String[makeInfo.size()];
+            //makeInfo.toArray(makes);
+
+            models = new String[modelInfo.size()];
+            //modelInfo.toArray(models);
+
+            for (int i = 0; i< makeInfo.size(); i++)
+            {
+                makes[i] = makeInfo.get(i).get("make").toString();
+            }
             makeAdapter= new ArrayAdapter<>(getActivity(),android.R.layout.simple_dropdown_item_1line, makes);
             modelAdapter= new ArrayAdapter<>(getActivity(),android.R.layout.simple_dropdown_item_1line, models);
 
@@ -170,7 +180,6 @@ public class PageFragmentVid extends Fragment {
             Log.d("This is model array: ", "arr: " + Arrays.toString(models));
 
             btnCarAdd = (Button) view.findViewById(R.id.btnCarAdd);
-
             btnCarAdd.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -286,12 +295,11 @@ public class PageFragmentVid extends Fragment {
     {
         try {
             JSONObject json = new JSONObject(loadCarJsonLocal());
-            JSONArray m_jArry = json.getJSONArray("make");
+            JSONArray m_jArry = json.getJSONArray("carmakes");
             HashMap<String, String> make_li;
             HashMap<String, String> model_li;
             for (int i = 0; i < m_jArry.length(); i++) {
                 JSONObject jo_inside = m_jArry.getJSONObject(i);
-                Log.d("Details-->", jo_inside.getString("make"));
                 String make_value = jo_inside.getString("make");
                 String model_value = jo_inside.getString("model");
 

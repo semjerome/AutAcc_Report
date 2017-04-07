@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools" android:id="@+id/activity_main"
+    android:layout_width="match_parent" android:layout_height="match_parent"
+    android:paddingBottom="@dimen/activity_vertical_margin"
+    android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:paddingRight="@dimen/activity_horizontal_margin"
+    android:paddingTop="@dimen/activity_vertical_margin"
+
+    android:background="@drawable/background">
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/layout_login"
+        android:layout_marginBottom="78dp"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentStart="true">
+
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/layUser"
+            android:layout_alignParentTop="true"
+
+            android:layout_alignParentStart="true">
+
+            <LinearLayout
+                android:orientation="vertical"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:id="@+id/layFiller"
+                android:layout_above="@+id/layout_login">
+
+            </LinearLayout>
+
+            <TextView
+                android:text="@string/loginpwBt"
+                android:textSize="18sp"
+                android:textStyle="bold"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/tvPW"
+                android:layout_alignBottom="@+id/etPW"
+                android:layout_toStartOf="@+id/etPW"
+                android:layout_weight="1" />
+
+            <TextView
+                        android:text="@string/username"
+                        android:textSize="18sp"
+                        android:textStyle="bold"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/tvUserName"
+                        android:layout_above="@+id/etPW"
+                        android:layout_alignStart="@+id/tvPW"
+                        />
+
+            <EditText
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:inputType="text|textPersonName"
+                android:ems="10"
+                android:id="@+id/etUserName"
+
+                android:layout_above="@+id/etPW"
+                android:layout_alignParentEnd="true"
+                tools:ignore="LabelFor"
+               />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="30dp"
+            android:id="@+id/layPW"
+            android:layout_below="@+id/layUser"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentStart="true">
+
+            <EditText
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:inputType="textPassword"
+                android:ems="10"
+                android:id="@+id/etPW"
+                android:layout_alignParentBottom="true"
+                android:layout_alignBottom="@+id/tvPW"
+                android:layout_alignStart="@+id/tvPW"
+                tools:ignore="LabelFor" />
+
+
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+    <Button
+        android:text="@string/log_in"
+        android:layout_width="110dp"
+        android:layout_height="wrap_content"
+        android:layout_gravity="right"
+        android:id="@+id/btnLogin"
+        android:background="@drawable/buttonshape"
+
+        android:layout_marginBottom="41dp"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentEnd="true" />
+
+</RelativeLayout>
+
