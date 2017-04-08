@@ -114,7 +114,7 @@ public class ReportList extends AppCompatActivity {
             //String uri = "http://semjerome.com/app/incident.php";
             //String jsonStr = sh.makeServiceCall(uri);
             try {
-                URL url = new URL("http://semjerome.com/app/incident.php");
+                URL url = new URL("http://autaccreport.com/php/incident.php");
                 String urlParams = "uid="+uid;
 
                 HttpURLConnection httpURLConnection = (HttpURLConnection) url.openConnection();

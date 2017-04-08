@@ -48,9 +48,9 @@ public class MainActivity extends AppCompatActivity {
         username = (EditText) findViewById(R.id.etUserName);
         password = (EditText) findViewById(R.id.etPW);
         Button b1 = (Button) findViewById(R.id.btnLogin);
-
-
-
+        NAME= null;
+        PASSWORD = null;
+        EMAIL = null;
         b1.setOnClickListener(new View.OnClickListener() {
             @Override
         public void onClick (View v)
@@ -83,7 +83,7 @@ public class MainActivity extends AppCompatActivity {
             int tmp;
 
             try {
-                URL url = new URL("http://semjerome.com/app/login.php");
+                URL url = new URL("http://autaccreport.com/php/login.php");
                 String urlParams = "name="+name+"&password="+password;
 
                 HttpURLConnection httpURLConnection = (HttpURLConnection) url.openConnection();

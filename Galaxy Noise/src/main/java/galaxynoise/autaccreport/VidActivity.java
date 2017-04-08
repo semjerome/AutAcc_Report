@@ -228,7 +228,7 @@ public class VidActivity extends AppCompatActivity implements View.OnClickListen
             //Product website
             case R.id.about:
                 intent = new Intent(Intent.ACTION_VIEW,
-                        Uri.parse("http://semjerome.com"));
+                        Uri.parse("http://autaccreport.com/wordpresstest"));
                 startActivity(intent);
                 break;
 

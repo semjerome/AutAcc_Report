@@ -265,7 +265,7 @@ public class PageFragmentVid extends Fragment {
             mediaController.setAnchorView(mVideoView);
             mVideoView.setMediaController(mediaController);
             String myPackage = "galaxynoise.autaccreport";
-            Uri uri = Uri.parse("http://www.semjerome.com/Android/" + vidname + ".mp4");
+            Uri uri = Uri.parse("http://www.autaccreport.com/Videos/" + vidname + ".mp4");
             try {
                 mVideoView.setVideoURI(uri);
                 mVideoView.start();
@@ -369,12 +369,12 @@ public class PageFragmentVid extends Fragment {
                 URL url;
 
                 if(isCarEmpty==true) {
-                    url = new URL("http://semjerome.com/app/addCar.php");
+                    url = new URL("http://autaccreport.com/php/addCar.php");
                     isCarEmpty=false;
                 }
                 else
                 {
-                    url = new URL("http://semjerome.com/app/updateCar.php");
+                    url = new URL("http://autaccreport.com/php/updateCar.php");
                 }
 
                 String urlParams = "platenumber="+platenumber+"&carmake="+carmake+"&carmodel="
@@ -457,7 +457,7 @@ public class PageFragmentVid extends Fragment {
             //String jsonStr = sh.makeServiceCall(uri);
 
             try {
-                URL url = new URL("http://semjerome.com/app/getCar.php");
+                URL url = new URL("http://autaccreport.com/php/getCar.php");
                 String urlParams = "reportid=" + reportid;
 
                 HttpURLConnection httpURLConnection = (HttpURLConnection) url.openConnection();
@@ -584,12 +584,12 @@ public class PageFragmentVid extends Fragment {
             URL url;
             try {
                 if(isDriverEmpty==true) {
-                     url = new URL("http://semjerome.com/app/addDriver.php");
+                     url = new URL("http://autaccreport.com/php/addDriver.php");
                     isDriverEmpty=false;
                 }
                 else
                 {
-                     url = new URL("http://semjerome.com/app/updateDriver.php");
+                     url = new URL("http://autaccreport.com/php/updateDriver.php");
                 }
                 String urlParams = "driverlicense=" + driverlicense + "&fname=" + fname + "&lname="
                         + lname + "&gender=" + gender + "&insuranceNumber=" + insurancenumber + "&reportid=" + reportid;
@@ -672,7 +672,7 @@ public class PageFragmentVid extends Fragment {
 
 
                 try {
-                    URL url = new URL("http://semjerome.com/app/getDriver.php");
+                    URL url = new URL("http://autaccreport.com/php/getDriver.php");
                     String urlParams = "reportid=" + reportid;
 
                     HttpURLConnection httpURLConnection = (HttpURLConnection) url.openConnection();
